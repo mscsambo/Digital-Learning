@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -82,13 +83,10 @@
                 <p class="text-orange-400 text-xl font-semibold mb-6" id="detailPriceRange">$2.50 — $20.00</p>
 
                 <div class="flex gap-4 mb-8">
-                    <a href="#" class="flex-1 bg-orange-400 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded text-center transition">
+                    <a href="https://t.me/chhornsambo" class="flex-1 bg-orange-400 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded text-center transition">
                         Buy on Telegram
                     </a>
-                    <a href="#" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded text-center transition">
-                        Buy on WhatsApp
-                    </a>
-                </div>
+                                    </div>
 
                 <p class="text-xs text-gray-400 italic mb-6">*Select Plans, Duration, and Others Type below to calculate the price.</p>
 
