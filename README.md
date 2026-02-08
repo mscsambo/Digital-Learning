@@ -35,12 +35,6 @@
         }
         .view-hidden { display: none; }
         
-        .page-title-border {
-            border-bottom: 1px solid #2a2a2a;
-            margin-bottom: 2rem;
-            padding-bottom: 0.5rem;
-            color: #888;
-        }
         .section-divider {
             border-top: 1px solid #2a2a2a;
             margin: 3rem 0;
@@ -68,9 +62,7 @@
 
     <!-- KHBOTAI Header Section -->
     <div class="max-w-6xl mx-auto">
-        <h2 class="text-sm font-medium page-title-border">Digital-Learning / Subscriptions</h2>
-        
-        <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-12 py-6 gap-6 border-b border-white/5">
             <div onclick="showStore()" class="cursor-pointer flex items-center gap-3">
                 <div class="w-10 h-10 bg-gradient-to-tr from-orange-600 to-orange-400 rounded-xl flex items-center justify-center font-black text-black text-xl shadow-lg shadow-orange-600/20">K</div>
                 <h1 class="text-3xl font-extrabold tracking-tighter">KHBOTAI<span class="text-orange-500">.DEV</span></h1>
