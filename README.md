@@ -25,6 +25,7 @@
         }
         .product-card {
             transition: transform 0.3s ease, border-color 0.3s ease;
+            background-color: #252525;
             border: 1px solid #333;
         }
         .product-card:hover {
@@ -32,31 +33,58 @@
             border-color: #f59e0b;
         }
         .view-hidden { display: none; }
+        
+        /* Matching the reference layout styling */
+        .page-title-border {
+            border-bottom: 1px solid #333;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+        }
+        .section-divider {
+            border-top: 1px solid #333;
+            margin: 2rem 0;
+            position: relative;
+        }
+        .section-divider span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1a1a1a;
+            padding: 0 1rem;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
-    <!-- Header / Nav -->
-    <header class="max-w-6xl mx-auto flex justify-between items-center mb-12">
-        <div onclick="showStore()" class="cursor-pointer flex items-center gap-2">
-            <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-black">N</div>
-            <h1 class="text-2xl font-bold tracking-tighter">NEXGEN<span class="text-orange-500">STORE</span></h1>
-        </div>
-        <nav class="hidden md:flex gap-6 text-sm text-gray-400">
-            <a href="javascript:void(0)" onclick="showStore()" class="hover:text-white transition">All Products</a>
-            <a href="#" class="hover:text-white transition">Support</a>
-            <a href="#" class="hover:text-white transition">My Orders</a>
-        </nav>
-    </header>
+    <!-- Header Section -->
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-2xl font-bold page-title-border">Digital-Learning</h2>
+        
+        <header class="flex justify-between items-center mb-12">
+            <div onclick="showStore()" class="cursor-pointer flex items-center gap-2 border-b-2 border-white pb-1">
+                <div class="w-8 h-8 bg-orange-500 rounded flex items-center justify-center font-bold text-black text-xs">N</div>
+                <h1 class="text-2xl font-bold tracking-tight">NEXGEN<span class="text-orange-500">STORE</span></h1>
+            </div>
+            <nav class="hidden md:flex gap-6 text-sm text-gray-400">
+                <a href="javascript:void(0)" onclick="showStore()" class="hover:text-white transition">All Products</a>
+                <a href="#" class="hover:text-white transition">Support</a>
+                <a href="#" class="hover:text-white transition">My Orders</a>
+            </nav>
+        </header>
+    </div>
 
     <!-- STOREFRONT VIEW -->
     <div id="storeView" class="max-w-6xl mx-auto">
-        <div class="mb-10 text-center">
-            <h2 class="text-4xl font-extrabold mb-4">Premium Subscriptions</h2>
-            <p class="text-gray-400">Instant access to the world's best digital services at unbeatable prices.</p>
+        <div class="section-divider">
+            <span class="text-xl font-bold">Premium Subscriptions</span>
+        </div>
+        
+        <div class="text-center mb-10">
+            <p class="text-gray-500 text-sm">Instant access to the world's best digital services at unbeatable prices.</p>
         </div>
 
-        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Products will be injected here -->
         </div>
     </div>
@@ -82,22 +110,25 @@
                 <p class="text-orange-400 text-xl font-semibold mb-6" id="detailPriceRange">$2.50 — $20.00</p>
 
                 <div class="flex gap-4 mb-8">
-                    <a href="https://t.me/chhornsambo" class="flex-1 bg-orange-400 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded text-center transition">
+                    <a href="#" class="flex-1 bg-orange-400 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded text-center transition shadow-lg shadow-orange-900/20">
                         Buy on Telegram
                     </a>
-                                    </div>
+                    <a href="#" class="flex-1 bg-[#d97706] hover:bg-orange-600 text-white font-bold py-3 px-4 rounded text-center transition">
+                        Buy on WhatsApp
+                    </a>
+                </div>
 
                 <p class="text-xs text-gray-400 italic mb-6">*Select Plans, Duration, and Others Type below to calculate the price.</p>
 
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm font-bold mb-2">Account Type : <span class="font-normal text-gray-400">Personal (Private)</span></label>
-                        <button class="selection-btn active px-4 py-2 text-sm rounded">Personal (Private)</button>
+                        <button class="selection-btn active px-4 py-2 text-sm rounded outline-none ring-1 ring-orange-500">Personal (Private)</button>
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold mb-2">Plan : <span class="font-normal text-gray-400" id="detailPlanName">Plus</span></label>
-                        <button class="selection-btn active px-4 py-2 text-sm rounded" id="detailPlanBtn">Plus</button>
+                        <button class="selection-btn active px-4 py-2 text-sm rounded outline-none ring-1 ring-orange-500" id="detailPlanBtn">Plus</button>
                     </div>
 
                     <div>
@@ -111,21 +142,30 @@
 
                 <ul class="mt-8 space-y-2 text-sm text-gray-200">
                     <li class="flex items-center gap-2"><span class="text-blue-400">☑</span> Account access on your email.</li>
+                    <li class="flex items-center gap-2"><span class="text-blue-400">☑</span> Non-Renewable.</li>
                     <li class="flex items-center gap-2"><span class="text-blue-400">☑</span> Full-time warranty.</li>
-                    <li class="flex items-center gap-2"><span class="text-blue-400">☑</span> 100% genuine access.</li>
+                    <li class="flex items-center gap-2"><span class="text-blue-400">☑</span> 100% genuine access to Coursera.</li>
                     <li class="flex items-center gap-2"><span class="text-blue-400">☑</span> Instant delivery.</li>
                 </ul>
 
                 <p class="text-3xl font-bold text-orange-400 mt-8" id="displayPrice">$0.00</p>
+                
+                <div class="mt-6 text-xs text-gray-500 space-y-1">
+                    <p>SKU: N/A</p>
+                    <p>Categories: <span class="text-orange-400">Online Courses, All time Popular, Learning Support</span></p>
+                </div>
             </div>
         </div>
 
         <!-- Description Box -->
-        <div class="border border-gray-700 rounded-lg p-8 mb-20">
+        <div class="border border-gray-700 rounded p-8 mb-20">
             <h2 class="text-3xl font-bold mb-6">Description</h2>
             <div class="space-y-4">
                 <h3 class="text-2xl font-bold">## Before placing an order, please get in touch with us.</h3>
-                <p class="text-gray-300" id="detailDescription">Get a subscription at an affordable price with full guarantee.</p>
+                <ul class="space-y-2 text-gray-300 ml-4 list-disc">
+                    <li>Get a Coursera subscription at an affordable price.</li>
+                    <li>100% genuine access to Coursera.</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -181,20 +221,14 @@
         function renderStore() {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = products.map(p => `
-                <div onclick="showDetails(${p.id})" class="product-card bg-[#252525] p-6 rounded-xl cursor-pointer">
-                    <div class="${p.color} aspect-video rounded-lg flex items-center justify-center mb-4">
+                <div onclick="showDetails(${p.id})" class="product-card p-6 rounded-lg cursor-pointer">
+                    <div class="${p.color} aspect-video rounded-md flex items-center justify-center mb-6 overflow-hidden">
                         ${p.icon.replace('w-32 h-32', 'w-16 h-16')}
                     </div>
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-xl font-bold">${p.name}</h3>
-                            <p class="text-gray-500 text-sm">${p.category}</p>
-                        </div>
-                        <p class="text-orange-500 font-bold">${p.range.split('—')[0]}</p>
+                    <div class="flex justify-between items-end">
+                        <h3 class="text-md font-bold text-gray-200">${p.name}</h3>
+                        <p class="text-orange-500 font-bold text-sm">${p.range.split('—')[0].trim()}</p>
                     </div>
-                    <button class="w-full mt-4 bg-white/5 hover:bg-orange-500 hover:text-white text-gray-300 py-2 rounded font-bold transition">
-                        View Details
-                    </button>
                 </div>
             `).join('');
         }
@@ -219,7 +253,7 @@
             const container = document.getElementById('durationContainer');
             container.innerHTML = currentProduct.durations.map((d, i) => `
                 <button onclick="setDuration('${d.label}', ${d.price})" 
-                        class="duration-btn selection-btn ${i === 0 ? 'active' : ''} px-6 py-2 text-sm rounded">
+                        class="duration-btn selection-btn ${i === 0 ? 'active outline-none ring-1 ring-orange-500' : ''} px-6 py-2 text-sm rounded">
                     ${d.label}
                 </button>
             `).join('');
@@ -241,9 +275,11 @@
             const buttons = document.querySelectorAll('.duration-btn');
             buttons.forEach(btn => {
                 if (btn.innerText.trim() === label) {
-                    btn.classList.add('active');
+                    btn.classList.add('active', 'outline-none', 'ring-1', 'ring-orange-500');
+                    btn.classList.remove('bg-white', 'text-black');
                 } else {
-                    btn.classList.remove('active');
+                    btn.classList.remove('active', 'outline-none', 'ring-1', 'ring-orange-500');
+                    btn.classList.add('bg-white', 'text-black');
                 }
             });
         }
