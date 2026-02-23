@@ -2,299 +2,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHBOTAI - Premium Digital Store</title>
+    <title>AI Sentinel | AI Content Detector</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0f0f0f;
-            color: #ffffff;
-            min-height: 100vh;
-        }
-        .selection-btn {
-            border: 1px solid #333;
-            background: #ffffff;
-            color: #000000;
-            transition: all 0.2s;
-        }
-        .selection-btn.active {
-            border-color: #ff6b00;
-            background: rgba(255, 107, 0, 0.1);
-            color: #ffffff;
-        }
-        .product-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background-color: #1a1a1a;
-            border: 1px solid #2a2a2a;
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-            border-color: #ff6b00;
-            box-shadow: 0 10px 30px -10px rgba(255, 107, 0, 0.2);
-        }
-        .view-hidden { display: none; }
-        
-        .section-divider {
-            border-top: 1px solid #2a2a2a;
-            margin: 3rem 0;
-            position: relative;
-        }
-        .section-divider span {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #0f0f0f;
-            padding: 0 1.5rem;
-            color: #ff6b00;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .kh-gradient-text {
-            background: linear-gradient(90deg, #ffffff, #ff6b00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="bg-gray-50 font-sans leading-normal tracking-normal">
 
-    <!-- KHBOTAI Header Section -->
-    <div class="max-w-6xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-12 py-6 gap-6 border-b border-white/5">
-            <div onclick="showStore()" class="cursor-pointer flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-tr from-orange-600 to-orange-400 rounded-xl flex items-center justify-center font-black text-black text-xl shadow-lg shadow-orange-600/20">K</div>
-                <h1 class="text-3xl font-extrabold tracking-tighter">KHBOTAI<span class="text-orange-500">.DEV</span></h1>
+    <nav class="flex items-center justify-between flex-wrap p-6 bg-white shadow-sm">
+        <div class="flex items-center flex-shrink-0 text-gray-800 mr-6">
+            <span class="font-bold text-xl tracking-tight text-indigo-600"><i class="fas fa-robot mr-2"></i>AI Sentinel</span>
+        </div>
+        <div class="block lg:hidden">
+            <button class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-400 hover:text-gray-800 hover:border-indigo-500">
+                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+            </button>
+        </div>
+        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+            <div class="text-sm lg:flex-grow text-right">
+                <a href="#" class="block mt-4 lg:inline-block lg:mt-0 text-gray-600 hover:text-indigo-600 mr-4">How it works</a>
+                <a href="#" class="block mt-4 lg:inline-block lg:mt-0 text-gray-600 hover:text-indigo-600 mr-4">API</a>
+                <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-indigo-600 border-indigo-600 hover:border-transparent hover:text-white hover:bg-indigo-600 mt-4 lg:mt-0">Premium</a>
             </div>
-            <nav class="flex gap-8 text-sm font-medium text-gray-400">
-                <a href="javascript:void(0)" onclick="showStore()" class="hover:text-orange-500 transition-colors">Products</a>
-                <a href="#" class="hover:text-orange-500 transition-colors">Pricing</a>
-                <a href="#" class="hover:text-orange-500 transition-colors">Support</a>
-                <a href="#" class="bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded-lg transition">Login</a>
-            </nav>
-        </header>
-    </div>
-
-    <!-- STOREFRONT VIEW -->
-    <div id="storeView" class="max-w-6xl mx-auto">
-        <div class="section-divider">
-            <span class="text-xs font-bold">Premium Marketplace</span>
         </div>
-        
-        <div class="text-center mb-12">
-            <h2 class="text-5xl font-black mb-4 kh-gradient-text">Unlock Premium Access</h2>
-            <p class="text-gray-500 text-lg max-w-2xl mx-auto">High-quality digital subscriptions and tools delivered instantly to your inbox.</p>
-        </div>
+    </nav>
 
-        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Products will be injected here -->
-        </div>
-    </div>
+    <header class="gradient-bg py-16 px-4 text-center text-white">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">AI Content Detector</h1>
+        <p class="text-xl opacity-90">Verify if text was written by ChatGPT, Gemini, Claude, or a Human.</p>
+    </header>
 
-    <!-- PRODUCT DETAIL VIEW -->
-    <div id="detailView" class="max-w-6xl mx-auto view-hidden">
-        <!-- Breadcrumbs -->
-        <nav class="text-sm text-gray-500 mb-8 flex items-center gap-2">
-            <a href="javascript:void(0)" onclick="showStore()" class="hover:text-orange-500">Home</a> 
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            <a href="#" class="hover:text-orange-500" id="detailCategory">Category</a> 
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            <span class="text-gray-300" id="detailCrumbName">Product</span>
-        </nav>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
-            <!-- Left: Product Image -->
-            <div id="detailImageContainer" class="relative group rounded-2xl aspect-square flex items-center justify-center p-12 overflow-hidden shadow-2xl shadow-black">
-                <!-- SVG Icon injected here -->
+    <main class="max-w-4xl mx-auto -mt-10 px-4 pb-12">
+        <div class="bg-white rounded-xl shadow-2xl p-6 md:p-8">
+            <div class="mb-4">
+                <label for="content" class="block text-gray-700 font-bold mb-2">Paste your text below (minimum 50 words recommended):</label>
+                <textarea id="content" rows="10" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700" placeholder="Paste the content you want to analyze here..."></textarea>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="text-sm text-gray-500">
+                    Character count: <span id="charCount">0</span>
+                </div>
+                <button onclick="analyzeText()" id="checkBtn" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded-full transition duration-300 shadow-lg transform hover:scale-105">
+                    Analyze Text
+                </button>
             </div>
 
-            <!-- Right: Product Info -->
-            <div class="flex flex-col">
-                <div class="mb-2">
-                    <span class="bg-orange-500/10 text-orange-500 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Verified Service</span>
-                </div>
-                <h1 class="text-5xl font-black mb-2 tracking-tight" id="detailName">Product Name</h1>
-                <p class="text-orange-500 text-2xl font-bold mb-8" id="detailPriceRange">$0.00</p>
-
-                <div class="flex gap-4 mb-10">
-                    <a href="#" class="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:scale-[1.02] text-white font-bold py-4 px-4 rounded-xl text-center transition shadow-lg shadow-orange-600/20">
-                        Purchase via Telegram
-                    </a>
-                    <a href="#" class="flex-1 bg-white/5 hover:bg-white/10 text-white font-bold py-4 px-4 rounded-xl text-center transition border border-white/10">
-                        Buy on WhatsApp
-                    </a>
-                </div>
-
-                <div class="space-y-8 p-6 bg-white/5 rounded-2xl border border-white/5">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">License Type</label>
-                        <button class="selection-btn active px-6 py-2 text-sm rounded-lg font-bold ring-2 ring-orange-500 ring-offset-2 ring-offset-[#1a1a1a]">Private Account</button>
+            <div id="results" class="hidden mt-12 border-t pt-8">
+                <h2 class="text-2xl font-bold text-center mb-8">Analysis Results</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg text-center border">
+                        <p class="text-gray-500 uppercase text-xs font-bold tracking-widest mb-2">AI Probability</p>
+                        <div class="text-5xl font-extrabold text-indigo-600" id="score">0%</div>
                     </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Subscription Term</label>
-                        <div class="flex flex-wrap gap-3" id="durationContainer">
-                            <!-- Buttons injected here -->
+                    <div class="bg-gray-50 p-6 rounded-lg text-center border">
+                        <p class="text-gray-500 uppercase text-xs font-bold tracking-widest mb-2">Verdict</p>
+                        <div class="text-2xl font-bold mt-2" id="verdict">Likely Human</div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg text-center border">
+                        <p class="text-gray-500 uppercase text-xs font-bold tracking-widest mb-2">Models Scanned</p>
+                        <div class="flex justify-center gap-2 mt-2 text-indigo-400">
+                            <i class="fas fa-brain" title="GPT-4"></i>
+                            <i class="fas fa-bolt" title="Gemini"></i>
+                            <i class="fas fa-feather" title="Claude"></i>
                         </div>
+                        <p class="text-xs text-gray-400 mt-2">Multi-model consensus</p>
                     </div>
                 </div>
-
-                <div class="mt-10 grid grid-cols-2 gap-4">
-                    <div class="flex items-center gap-3 text-sm text-gray-300">
-                        <div class="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">✓</div>
-                        Instant Delivery
-                    </div>
-                    <div class="flex items-center gap-3 text-sm text-gray-300">
-                        <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">🛡</div>
-                        Full Warranty
-                    </div>
-                </div>
-
-                <p class="text-4xl font-black text-orange-500 mt-12" id="displayPrice">$0.00</p>
             </div>
         </div>
 
-        <!-- Detailed Description -->
-        <div class="bg-white/5 rounded-3xl p-10 border border-white/5 mb-20">
-            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
-                <span class="w-2 h-8 bg-orange-500 rounded-full"></span>
-                Description & Terms
-            </h2>
-            <div class="prose prose-invert max-w-none text-gray-400 space-y-6">
-                <p class="text-xl font-medium text-white">Before purchasing, please note the following conditions for the best experience.</p>
-                <ul class="grid md:grid-cols-2 gap-4 list-none p-0">
-                    <li class="bg-black/20 p-4 rounded-xl border border-white/5 flex items-start gap-3">
-                        <span class="text-orange-500 font-bold">01.</span>
-                        <span>Official subscription activated on your own personal email address.</span>
-                    </li>
-                    <li class="bg-black/20 p-4 rounded-xl border border-white/5 flex items-start gap-3">
-                        <span class="text-orange-500 font-bold">02.</span>
-                        <span>24/7 Priority support via Telegram and WhatsApp for all customers.</span>
-                    </li>
-                </ul>
+        <section class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+                <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-indigo-600"></i>
+                </div>
+                <h3 class="font-bold text-lg">99% Accuracy</h3>
+                <p class="text-gray-600 text-sm">Trained on billions of tokens from LLMs and human writers.</p>
             </div>
-        </div>
-    </div>
+            <div>
+                <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-indigo-600"></i>
+                </div>
+                <h3 class="font-bold text-lg">Privacy First</h3>
+                <p class="text-gray-600 text-sm">We don't store your content or use it for training data.</p>
+            </div>
+            <div>
+                <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-infinity text-indigo-600"></i>
+                </div>
+                <h3 class="font-bold text-lg">Unlimited Checks</h3>
+                <p class="text-gray-600 text-sm">Our free tier allows for extensive daily checking.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white border-t py-8 text-center text-gray-500 text-sm">
+        &copy; 2026 AI Sentinel Inc. All rights reserved.
+    </footer>
 
     <script>
-        const products = [
-            {
-                id: 1,
-                name: "Coursera Plus",
-                category: "Learning",
-                range: "$2.50 — $20.00",
-                color: "bg-[#0056D2]",
-                icon: `<svg viewBox="0 0 24 24" class="w-32 h-32 fill-white" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.25 17.5h-2.5v-11h2.5v11zm5 0h-2.5v-6h2.5v6zm0-7.5h-2.5v-3.5h2.5v3.5z"/></svg>`,
-                durations: [
-                    { label: "1 Month", price: 2.50 },
-                    { label: "6 Months", price: 12.00 },
-                    { label: "1 Year", price: 20.00 }
-                ]
-            },
-            {
-                id: 2,
-                name: "Netflix UHD",
-                category: "Streaming",
-                range: "$3.00 — $35.00",
-                color: "bg-[#E50914]",
-                icon: `<svg viewBox="0 0 24 24" class="w-32 h-32 fill-white" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 2v20c1-.5 2.5-1 3.5-1s2.5.5 3.5 1V2c-1 .5-2.5 1-3.5 1s-2.5-.5-3.5-1z"/><path d="M17 2v20c1-.5 2.5-1 3.5-1V2c-1 .5-2.5 1-3.5 1z"/><path d="M3.5 2v20c1-.5 2.5-1 3.5-1V2c-1 .5-2.5 1-3.5 1z" opacity=".5"/></svg>`,
-                durations: [
-                    { label: "1 Month", price: 3.00 },
-                    { label: "3 Months", price: 8.50 },
-                    { label: "1 Year", price: 35.00 }
-                ]
-            },
-            {
-                id: 3,
-                name: "Spotify Premium",
-                category: "Music",
-                range: "$1.50 — $15.00",
-                color: "bg-[#1DB954]",
-                icon: `<svg viewBox="0 0 24 24" class="w-32 h-32 fill-white" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.51 17.3c-.22.36-.68.48-1.05.25-2.81-1.72-6.35-2.1-10.52-1.15-.41.09-.82-.16-.91-.57-.09-.41.16-.82.57-.91 4.57-1.04 8.49-.6 11.66 1.34.37.22.49.68.25 1.04zm1.48-3.26c-.28.45-.87.59-1.32.32-3.22-1.98-8.12-2.55-11.93-1.4-.5.15-1.03-.13-1.18-.63-.15-.5.13-1.03.63-1.18 4.35-1.32 9.77-.67 13.48 1.61.45.27.59.86.32 1.3zm.13-3.4c-3.86-2.29-10.24-2.51-13.97-1.38-.59.18-1.22-.16-1.4-.75-.18-.59.16-1.22.75-1.4 4.29-1.3 11.33-1.04 15.78 1.6.53.31.71 1 .4 1.53-.31.53-1 .71-1.56.4z"/></svg>`,
-                durations: [
-                    { label: "1 Month", price: 1.50 },
-                    { label: "6 Months", price: 8.00 },
-                    { label: "1 Year", price: 15.00 }
-                ]
+        // Simple UI Logic
+        const textArea = document.getElementById('content');
+        const charCount = document.getElementById('charCount');
+
+        textArea.addEventListener('input', () => {
+            charCount.innerText = textArea.value.length;
+        });
+
+        function analyzeText() {
+            const text = textArea.value.trim();
+            const btn = document.getElementById('checkBtn');
+            const resultsDiv = document.getElementById('results');
+
+            if (text.length < 20) {
+                alert("Please enter more text for an accurate analysis.");
+                return;
             }
-        ];
 
-        let currentProduct = null;
+            // UI Feedback: Loading state
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Analyzing...';
+            btn.disabled = true;
 
-        function renderStore() {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = products.map(p => `
-                <div onclick="showDetails(${p.id})" class="product-card p-6 rounded-2xl cursor-pointer group">
-                    <div class="${p.color} aspect-[4/3] rounded-xl flex items-center justify-center mb-6 overflow-hidden relative">
-                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
-                        ${p.icon.replace('w-32 h-32', 'w-20 h-20 group-hover:scale-110 transition-transform duration-500')}
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-bold text-white">${p.name}</h3>
-                            <span class="text-[10px] bg-white/5 text-gray-400 px-2 py-0.5 rounded uppercase font-bold tracking-widest">${p.category}</span>
-                        </div>
-                        <div class="flex justify-between items-baseline mt-2">
-                            <p class="text-orange-500 font-black text-xl">${p.range.split('—')[0].trim()}</p>
-                            <button class="text-xs text-gray-500 group-hover:text-white transition-colors">Details →</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function showDetails(id) {
-            currentProduct = products.find(p => p.id === id);
-            
-            document.getElementById('storeView').classList.add('view-hidden');
-            document.getElementById('detailView').classList.remove('view-hidden');
-            
-            document.getElementById('detailName').innerText = currentProduct.name;
-            document.getElementById('detailCrumbName').innerText = currentProduct.name;
-            document.getElementById('detailCategory').innerText = currentProduct.category;
-            document.getElementById('detailPriceRange').innerText = currentProduct.range;
-            document.getElementById('detailImageContainer').className = `relative group rounded-2xl aspect-square flex items-center justify-center p-12 ${currentProduct.color} shadow-2xl`;
-            document.getElementById('detailImageContainer').innerHTML = currentProduct.icon;
-
-            const container = document.getElementById('durationContainer');
-            container.innerHTML = currentProduct.durations.map((d, i) => `
-                <button onclick="setDuration('${d.label}', ${d.price})" 
-                        class="duration-btn selection-btn ${i === 0 ? 'active ring-2 ring-orange-500 ring-offset-2 ring-offset-[#1a1a1a]' : 'bg-white text-black'} px-5 py-2.5 text-xs rounded-lg font-bold">
-                    ${d.label}
-                </button>
-            `).join('');
-
-            setDuration(currentProduct.durations[0].label, currentProduct.durations[0].price);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function showStore() {
-            document.getElementById('storeView').classList.remove('view-hidden');
-            document.getElementById('detailView').classList.add('view-hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function setDuration(label, price) {
-            document.getElementById('displayPrice').innerText = '$' + price.toFixed(2);
-
-            const buttons = document.querySelectorAll('.duration-btn');
-            buttons.forEach(btn => {
-                if (btn.innerText.trim() === label) {
-                    btn.classList.add('active', 'ring-2', 'ring-orange-500', 'ring-offset-2', 'ring-offset-[#1a1a1a]');
-                    btn.classList.remove('bg-white', 'text-black');
+            // Simulate an API call delay
+            setTimeout(() => {
+                // For demonstration, we'll generate a random "AI" score
+                // In a real app, you'd send 'text' to an API here.
+                const randomScore = Math.floor(Math.random() * 100);
+                
+                resultsDiv.classList.remove('hidden');
+                document.getElementById('score').innerText = randomScore + '%';
+                
+                const verdict = document.getElementById('verdict');
+                if(randomScore > 70) {
+                    verdict.innerText = "Highly Likely AI";
+                    verdict.className = "text-2xl font-bold mt-2 text-red-600";
+                } else if (randomScore > 40) {
+                    verdict.innerText = "Mixed Content";
+                    verdict.className = "text-2xl font-bold mt-2 text-yellow-600";
                 } else {
-                    btn.classList.remove('active', 'ring-2', 'ring-orange-500', 'ring-offset-2', 'ring-offset-[#1a1a1a]');
-                    btn.classList.add('bg-white', 'text-black');
+                    verdict.innerText = "Likely Human";
+                    verdict.className = "text-2xl font-bold mt-2 text-green-600";
                 }
-            });
-        }
 
-        function resetSelection() {
-            if (currentProduct) setDuration(currentProduct.durations[0].label, currentProduct.durations[0].price);
+                btn.innerHTML = 'Analyze Text';
+                btn.disabled = false;
+                
+                // Scroll to results
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
         }
-
-        renderStore();
     </script>
 </body>
 </html>
