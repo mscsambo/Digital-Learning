@@ -105,7 +105,7 @@
     </footer>
 
     <script>
-        const API_KEY = "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";
+        const API_KEY = "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";
         const textArea = document.getElementById('content');
         
         // --- 1. DARK MODE LOGIC ---
