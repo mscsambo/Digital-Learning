@@ -1,1190 +1,1911 @@
-<html lang="en">
+<html lang="km">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learnify — Modern Learning Platform</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>ប្រព័ន្ធគ្រប់គ្រងបុគ្គលិក | Employee Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Kantumruy+Pro:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-  :root {
-    --bg-deep:    #080c14;
-    --bg-mid:     #0d1320;
-    --bg-card:    #111827;
-    --bg-glass:   rgba(255,255,255,0.04);
-    --border:     rgba(255,255,255,0.08);
-    --accent:     #00e5a0;
-    --accent2:    #6c63ff;
-    --accent3:    #ff6b6b;
-    --accent4:    #f9c74f;
-    --text-hi:    #f1f5f9;
-    --text-mid:   #94a3b8;
-    --text-lo:    #475569;
-    --radius-lg:  18px;
-    --radius-md:  12px;
-    --radius-sm:  8px;
-    --sidebar-w:  260px;
-    --topbar-h:   70px;
-  }
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #1e4d78;
+  --accent: #e8a020;
+  --accent-light: #f5b942;
+  --danger: #e53e3e;
+  --success: #38a169;
+  --warning: #d69e2e;
+  --info: #3182ce;
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --surface2: #f7fafc;
+  --border: #e2e8f0;
+  --text: #1a202c;
+  --text-muted: #718096;
+  --shadow: 0 4px 24px rgba(26,58,92,0.10);
+  --shadow-lg: 0 8px 40px rgba(26,58,92,0.18);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --sidebar-w: 260px;
+  --header-h: 64px;
+  --font-km: 'Kantumruy Pro', 'Hanuman', serif;
+  --font-en: 'DM Sans', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-km);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body.lang-en{font-family:var(--font-en)}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ========== LOGIN ========== */
+#loginPage{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;
+  background: linear-gradient(135deg, #0f2744 0%, #1a3a5c 40%, #1e5280 70%, #e8a020 100%);
+  position:relative;overflow:hidden;
+}
+#loginPage::before{
+  content:'';position:absolute;inset:0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(232,160,32,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(30,82,128,0.3) 0%, transparent 50%);
+}
+.login-bg-shape{
+  position:absolute;width:600px;height:600px;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.06);
+  top:-100px;right:-100px;pointer-events:none;
+}
+.login-bg-shape:nth-child(2){width:400px;height:400px;bottom:-80px;left:-80px;border-color:rgba(232,160,32,0.1)}
+.login-card{
+  position:relative;z-index:2;
+  background:rgba(255,255,255,0.97);
+  border-radius:24px;
+  padding:50px 44px;
+  width:420px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15);
+  animation: loginSlide 0.6s cubic-bezier(.22,.68,0,1.2) both;
+}
+@keyframes loginSlide{from{opacity:0;transform:translateY(40px) scale(.97)}to{opacity:1;transform:none}}
+.login-logo{
+  text-align:center;margin-bottom:32px;
+}
+.login-logo .logo-icon{
+  width:72px;height:72px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius:20px;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;color:#fff;
+  box-shadow:0 8px 24px rgba(26,58,92,0.3);
+}
+.login-logo h1{font-size:1.5rem;color:var(--primary);font-weight:700;line-height:1.3}
+.login-logo p{color:var(--text-muted);font-size:.85rem;margin-top:4px}
+.lang-toggle{
+  display:flex;gap:8px;justify-content:center;margin-bottom:24px;
+}
+.lang-btn{
+  padding:6px 18px;border-radius:20px;border:2px solid var(--border);
+  background:transparent;cursor:pointer;font-size:.82rem;font-weight:600;
+  color:var(--text-muted);transition:.2s;font-family:inherit;
+}
+.lang-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:6px}
+.form-group .input-wrap{position:relative}
+.form-group .input-wrap i{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--text-muted);font-size:.9rem;
+}
+.form-group input{
+  width:100%;padding:12px 14px 12px 42px;
+  border:2px solid var(--border);border-radius:var(--radius-sm);
+  font-size:.92rem;font-family:inherit;
+  transition:.2s;background:var(--surface2);color:var(--text);
+}
+.form-group input:focus{outline:none;border-color:var(--primary);background:#fff}
+.btn-login{
+  width:100%;padding:14px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color:#fff;border:none;border-radius:var(--radius-sm);
+  font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:.2s;margin-top:4px;
+  box-shadow:0 4px 16px rgba(26,58,92,0.3);
+}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(26,58,92,0.4)}
+.login-footer{text-align:center;margin-top:20px;color:var(--text-muted);font-size:.78rem}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg-deep);
-    color: var(--text-hi);
-    min-height: 100vh;
-    display: flex;
-    overflow-x: hidden;
-  }
+/* ========== APP LAYOUT ========== */
+#app{display:none;min-height:100vh}
 
-  /* ── SIDEBAR ── */
-  .sidebar {
-    width: var(--sidebar-w);
-    background: var(--bg-mid);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    z-index: 100;
-    padding: 28px 0;
-    transition: transform .3s ease;
-  }
+/* SIDEBAR */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-w);
+  background: linear-gradient(180deg, #0f2744 0%, #1a3a5c 60%, #16334f 100%);
+  z-index:100;display:flex;flex-direction:column;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.18);
+  transition:.3s;
+}
+.sidebar-logo{
+  padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;gap:12px;
+}
+.sidebar-logo .logo-mark{
+  width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),#f5b942);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:#fff;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(232,160,32,0.4);
+}
+.sidebar-logo .logo-text{color:#fff}
+.sidebar-logo .logo-text h2{font-size:.88rem;font-weight:700;line-height:1.2}
+.sidebar-logo .logo-text p{font-size:.7rem;color:rgba(255,255,255,0.5);margin-top:2px}
+.sidebar-nav{flex:1;overflow-y:auto;padding:12px 0}
+.sidebar-nav::-webkit-scrollbar{width:4px}
+.sidebar-nav::-webkit-scrollbar-track{background:transparent}
+.sidebar-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px}
+.nav-section{padding:8px 16px 4px;font-size:.65rem;font-weight:700;
+  color:rgba(255,255,255,0.35);letter-spacing:.1em;text-transform:uppercase}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 20px;cursor:pointer;
+  color:rgba(255,255,255,0.7);font-size:.82rem;font-weight:500;
+  transition:.2s;border-left:3px solid transparent;margin:1px 0;
+  position:relative;
+}
+.nav-item:hover{background:rgba(255,255,255,0.07);color:#fff}
+.nav-item.active{
+  background:rgba(232,160,32,0.15);color:#fff;
+  border-left-color:var(--accent);
+}
+.nav-item i{width:18px;text-align:center;font-size:.9rem;flex-shrink:0}
+.nav-badge{
+  margin-left:auto;background:var(--accent);color:#fff;
+  font-size:.62rem;font-weight:700;
+  padding:2px 7px;border-radius:10px;
+}
+.sidebar-bottom{
+  padding:16px;border-top:1px solid rgba(255,255,255,0.08);
+}
+.sidebar-user{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  border-radius:var(--radius-sm);background:rgba(255,255,255,0.07);cursor:pointer;
+}
+.sidebar-user .avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),#e07010);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;color:#fff;font-weight:700;flex-shrink:0;
+  overflow:hidden;
+}
+.sidebar-user .avatar img{width:100%;height:100%;object-fit:cover}
+.sidebar-user .uinfo{flex:1;min-width:0}
+.sidebar-user .uinfo .uname{color:#fff;font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-user .uinfo .urole{color:rgba(255,255,255,0.45);font-size:.65rem}
 
-  .logo {
-    display: flex; align-items: center; gap: 10px;
-    padding: 0 24px 28px;
-    border-bottom: 1px solid var(--border);
-  }
-  .logo-icon {
-    width: 36px; height: 36px;
-    background: var(--accent);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-  .logo-text {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 20px;
-    letter-spacing: -0.5px;
-    color: var(--text-hi);
-  }
-  .logo-text span { color: var(--accent); }
+/* HEADER */
+.header{
+  position:fixed;top:0;left:var(--sidebar-w);right:0;height:var(--header-h);
+  background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:16px;
+  z-index:90;box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.header-title{font-size:1.05rem;font-weight:700;color:var(--primary);flex:1}
+.header-title span{font-size:.75rem;color:var(--text-muted);font-weight:400;display:block;margin-top:1px}
+.header-actions{display:flex;align-items:center;gap:10px}
+.hbtn{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  border:1px solid var(--border);background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text-muted);font-size:.85rem;
+  transition:.2s;position:relative;
+}
+.hbtn:hover{background:var(--bg);color:var(--primary)}
+.hbtn .notif-dot{
+  position:absolute;top:6px;right:6px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--danger);border:2px solid #fff;
+}
+.lang-switch{
+  display:flex;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;
+}
+.lang-switch button{
+  padding:6px 12px;border:none;background:#fff;
+  font-size:.75rem;font-weight:600;cursor:pointer;
+  color:var(--text-muted);font-family:inherit;transition:.2s;
+}
+.lang-switch button.active{background:var(--primary);color:#fff}
 
-  .nav-section { padding: 20px 16px 0; }
-  .nav-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--text-lo);
-    padding: 0 8px;
-    margin-bottom: 6px;
-  }
+/* MAIN CONTENT */
+.main{
+  margin-left:var(--sidebar-w);margin-top:var(--header-h);
+  padding:28px 28px 40px;min-height:calc(100vh - var(--header-h));
+}
+.page{display:none}
+.page.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-  .nav-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 11px 12px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all .2s;
-    color: var(--text-mid);
-    font-size: 14px;
-    font-weight: 400;
-    position: relative;
-    margin-bottom: 2px;
-    text-decoration: none;
-  }
-  .nav-item:hover { background: var(--bg-glass); color: var(--text-hi); }
-  .nav-item.active {
-    background: rgba(0,229,160,0.12);
-    color: var(--accent);
-    font-weight: 500;
-  }
-  .nav-item.active::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 50%;
-    transform: translateY(-50%);
-    width: 3px; height: 60%;
-    background: var(--accent);
-    border-radius: 0 4px 4px 0;
-  }
-  .nav-icon { font-size: 17px; width: 20px; text-align: center; }
-  .nav-badge {
-    margin-left: auto;
-    background: var(--accent3);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 7px;
-    border-radius: 99px;
-  }
+/* CARDS & STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:28px}
+.stat-card{
+  background:#fff;border-radius:var(--radius);padding:22px;
+  box-shadow:var(--shadow);border:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.stat-card::after{
+  content:'';position:absolute;top:-20px;right:-20px;
+  width:80px;height:80px;border-radius:50%;opacity:.08;
+}
+.stat-card.blue::after{background:var(--primary)}
+.stat-card.gold::after{background:var(--accent)}
+.stat-card.green::after{background:var(--success)}
+.stat-card.red::after{background:var(--danger)}
+.stat-card .stat-icon{
+  width:46px;height:46px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;margin-bottom:14px;
+}
+.stat-card.blue .stat-icon{background:rgba(26,58,92,.1);color:var(--primary)}
+.stat-card.gold .stat-icon{background:rgba(232,160,32,.12);color:var(--accent)}
+.stat-card.green .stat-icon{background:rgba(56,161,105,.1);color:var(--success)}
+.stat-card.red .stat-icon{background:rgba(229,62,62,.1);color:var(--danger)}
+.stat-card .stat-val{font-size:1.9rem;font-weight:800;color:var(--primary);line-height:1}
+.stat-card .stat-label{font-size:.75rem;color:var(--text-muted);margin-top:6px;font-weight:500}
+.stat-card .stat-change{
+  font-size:.72rem;margin-top:8px;font-weight:600;
+}
+.stat-card .stat-change.up{color:var(--success)}
+.stat-card .stat-change.down{color:var(--danger)}
 
-  .sidebar-footer {
-    margin-top: auto;
-    padding: 20px 16px 0;
-    border-top: 1px solid var(--border);
-  }
-  .user-pill {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background .2s;
-  }
-  .user-pill:hover { background: var(--bg-glass); }
-  .user-avatar {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent2), var(--accent));
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 14px; color: #fff;
-    flex-shrink: 0;
-  }
-  .user-info { flex: 1; min-width: 0; }
-  .user-name { font-size: 13px; font-weight: 500; color: var(--text-hi); }
-  .user-role { font-size: 11px; color: var(--text-lo); }
+/* TABLE */
+.card{
+  background:#fff;border-radius:var(--radius);
+  box-shadow:var(--shadow);border:1px solid var(--border);
+  overflow:hidden;margin-bottom:22px;
+}
+.card-header{
+  padding:18px 22px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.card-header h3{font-size:.95rem;font-weight:700;color:var(--primary);flex:1}
+.card-body{padding:22px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+thead th{
+  padding:10px 14px;text-align:left;
+  background:var(--bg);color:var(--primary);
+  font-weight:700;font-size:.75rem;
+  border-bottom:2px solid var(--border);white-space:nowrap;
+}
+tbody td{
+  padding:11px 14px;border-bottom:1px solid var(--border);
+  color:var(--text);vertical-align:middle;
+}
+tbody tr:hover{background:var(--bg)}
+tbody tr:last-child td{border-bottom:none}
+.emp-name{display:flex;align-items:center;gap:10px}
+.emp-avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:700;font-size:.78rem;flex-shrink:0;
+  overflow:hidden;
+}
+.emp-avatar img{width:100%;height:100%;object-fit:cover}
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;
+}
+.badge-green{background:rgba(56,161,105,.12);color:var(--success)}
+.badge-red{background:rgba(229,62,62,.1);color:var(--danger)}
+.badge-gold{background:rgba(232,160,32,.12);color:#b7791f}
+.badge-blue{background:rgba(49,130,206,.1);color:var(--info)}
+.badge-gray{background:var(--bg);color:var(--text-muted)}
 
-  /* ── MAIN ── */
-  .main {
-    margin-left: var(--sidebar-w);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+/* BUTTONS */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:var(--radius-sm);
+  font-size:.8rem;font-weight:600;cursor:pointer;
+  border:none;font-family:inherit;transition:.2s;
+}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-light)}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{background:var(--accent-light)}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-outline{background:#fff;color:var(--primary);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--primary);background:var(--bg)}
+.btn-sm{padding:5px 12px;font-size:.73rem}
+.btn-icon{width:32px;height:32px;padding:0;justify-content:center}
 
-  /* ── TOPBAR ── */
-  .topbar {
-    height: var(--topbar-h);
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center;
-    padding: 0 36px;
-    gap: 16px;
-    position: sticky; top: 0;
-    background: rgba(8,12,20,0.85);
-    backdrop-filter: blur(16px);
-    z-index: 50;
-  }
-  .topbar-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    letter-spacing: -0.3px;
-    flex: 1;
-  }
-  .search-bar {
-    display: flex; align-items: center; gap: 10px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 99px;
-    padding: 9px 18px;
-    width: 280px;
-    transition: border-color .2s;
-  }
-  .search-bar:focus-within { border-color: var(--accent); }
-  .search-bar input {
-    background: none; border: none; outline: none;
-    color: var(--text-hi);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13.5px;
-    width: 100%;
-  }
-  .search-bar input::placeholder { color: var(--text-lo); }
-  .search-icon { color: var(--text-lo); font-size: 15px; }
+/* SEARCH & FILTER */
+.search-bar{
+  position:relative;flex:1;min-width:160px;
+}
+.search-bar i{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:var(--text-muted);font-size:.85rem;
+}
+.search-bar input{
+  width:100%;padding:8px 12px 8px 36px;
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  font-size:.82rem;font-family:inherit;background:var(--bg);
+  transition:.2s;
+}
+.search-bar input:focus{outline:none;border-color:var(--primary);background:#fff}
 
-  .topbar-actions { display: flex; align-items: center; gap: 8px; }
-  .icon-btn {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    font-size: 16px;
-    color: var(--text-mid);
-    transition: all .2s;
-    position: relative;
-  }
-  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .notif-dot {
-    width: 7px; height: 7px;
-    background: var(--accent3);
-    border-radius: 50%;
-    position: absolute; top: 6px; right: 6px;
-    border: 1.5px solid var(--bg-deep);
-  }
+/* FORMS */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.form-field label{display:block;font-size:.78rem;font-weight:600;color:var(--primary);margin-bottom:5px}
+.form-field input,.form-field select,.form-field textarea{
+  width:100%;padding:9px 12px;
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  font-size:.82rem;font-family:inherit;background:var(--bg);
+  transition:.2s;color:var(--text);
+}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+  outline:none;border-color:var(--primary);background:#fff;
+}
+.form-field textarea{min-height:80px;resize:vertical}
+.section-title{
+  font-size:.82rem;font-weight:800;color:var(--primary);
+  text-transform:uppercase;letter-spacing:.05em;
+  padding:0 0 10px;border-bottom:2px solid var(--border);
+  margin-bottom:18px;
+}
 
-  /* ── CONTENT ── */
-  .content { padding: 36px; flex: 1; }
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(10,20,40,0.55);z-index:200;
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex;animation:fadeIn .2s ease}
+.modal{
+  background:#fff;border-radius:20px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.3);
+  width:90%;max-width:680px;max-height:90vh;overflow-y:auto;
+  animation:modalIn .3s cubic-bezier(.22,.68,0,1.2);
+}
+@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(20px)}to{opacity:1;transform:none}}
+.modal-header{
+  padding:22px 26px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+}
+.modal-header h3{font-size:1rem;font-weight:700;color:var(--primary);flex:1}
+.modal-body{padding:26px}
+.modal-footer{
+  padding:16px 26px;border-top:1px solid var(--border);
+  display:flex;justify-content:flex-end;gap:10px;
+}
 
-  /* ── HERO BANNER ── */
-  .hero {
-    border-radius: var(--radius-lg);
-    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-    padding: 40px 44px;
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 36px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 80% 50%, rgba(0,229,160,0.15) 0%, transparent 65%);
-    pointer-events: none;
-  }
-  .hero-orb {
-    position: absolute; right: 200px; top: -60px;
-    width: 240px; height: 240px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(108,99,255,0.3), transparent 70%);
-    pointer-events: none;
-  }
-  .hero-text h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 30px; font-weight: 800;
-    line-height: 1.2; margin-bottom: 8px;
-    letter-spacing: -0.5px;
-  }
-  .hero-text h2 span { color: var(--accent); }
-  .hero-text p { color: var(--text-mid); font-size: 15px; max-width: 420px; line-height: 1.6; }
-  .hero-stats {
-    display: flex; gap: 32px;
-    position: relative; z-index: 1;
-  }
-  .h-stat { text-align: center; }
-  .h-stat-val {
-    font-family: 'Syne', sans-serif;
-    font-size: 32px; font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .h-stat-lbl { font-size: 12px; color: var(--text-mid); margin-top: 4px; }
+/* PHOTO UPLOAD */
+.photo-upload{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:120px;height:160px;border:2px dashed var(--border);
+  border-radius:var(--radius-sm);cursor:pointer;
+  background:var(--bg);color:var(--text-muted);
+  font-size:.72rem;text-align:center;gap:8px;
+  transition:.2s;position:relative;overflow:hidden;
+}
+.photo-upload:hover{border-color:var(--primary);color:var(--primary)}
+.photo-upload img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo-upload input{display:none}
 
-  /* ── SECTION HEADING ── */
-  .section-head {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  .section-head h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 18px; font-weight: 700;
-    letter-spacing: -0.3px;
-  }
-  .see-all {
-    font-size: 13px; color: var(--accent);
-    cursor: pointer; text-decoration: none;
-    font-weight: 500;
-    transition: opacity .2s;
-  }
-  .see-all:hover { opacity: .7; }
+/* EMPLOYEE CARD */
+.emp-card-preview{
+  background: linear-gradient(135deg, #0f2744 0%, #1a3a5c 60%, #16334f 100%);
+  border-radius:16px;padding:24px;color:#fff;
+  position:relative;overflow:hidden;width:340px;
+  box-shadow:var(--shadow-lg);
+}
+.emp-card-preview::before{
+  content:'';position:absolute;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(232,160,32,0.1);
+  top:-60px;right:-40px;
+}
+.emp-card-preview .card-flag{
+  width:30px;height:20px;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2"><rect width="3" height="2" fill="%23032ea1"/><path d="M0 .5L1.5 1.8L3 .5L1.5 0z" fill="%23e00025"/></svg>') center/cover;
+  border-radius:2px;position:absolute;top:16px;right:16px;
+}
+.emp-card-preview .card-logo{
+  font-size:.7rem;font-weight:700;color:var(--accent);
+  letter-spacing:.05em;margin-bottom:16px;
+}
+.emp-card-preview .card-photo{
+  width:72px;height:96px;border-radius:8px;
+  background:rgba(255,255,255,.15);
+  border:2px solid rgba(232,160,32,.4);
+  overflow:hidden;margin-bottom:12px;
+}
+.emp-card-preview .card-photo img{width:100%;height:100%;object-fit:cover}
+.emp-card-preview .card-name{font-size:1rem;font-weight:700}
+.emp-card-preview .card-pos{font-size:.72rem;color:rgba(255,255,255,.65);margin-top:3px}
+.emp-card-preview .card-info{
+  margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.emp-card-preview .card-info-item .ci-label{font-size:.6rem;color:rgba(255,255,255,.4);font-weight:600;text-transform:uppercase}
+.emp-card-preview .card-info-item .ci-val{font-size:.73rem;font-weight:600;color:#fff;margin-top:2px}
+.emp-card-preview .card-barcode{
+  height:30px;margin-top:14px;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.7) 0, rgba(255,255,255,.7) 2px, transparent 2px, transparent 5px);
+  border-radius:2px;
+}
 
-  /* ── STATS STRIP ── */
-  .stats-strip {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 36px;
-  }
-  .stat-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 22px 24px;
-    display: flex; align-items: center; gap: 16px;
-    transition: border-color .2s, transform .2s;
-    animation: fadeUp .5s both;
-  }
-  .stat-card:hover { border-color: rgba(255,255,255,0.16); transform: translateY(-2px); }
-  .stat-icon-wrap {
-    width: 48px; height: 48px;
-    border-radius: var(--radius-md);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
-  }
-  .si-green  { background: rgba(0,229,160,0.12); }
-  .si-purple { background: rgba(108,99,255,0.12); }
-  .si-red    { background: rgba(255,107,107,0.12); }
-  .si-yellow { background: rgba(249,199,79,0.12); }
-  .stat-val {
-    font-family: 'Syne', sans-serif;
-    font-size: 26px; font-weight: 800;
-    letter-spacing: -0.5px; line-height: 1;
-    margin-bottom: 4px;
-  }
-  .stat-lbl { font-size: 12.5px; color: var(--text-mid); }
-  .stat-delta {
-    font-size: 11.5px; color: var(--accent);
-    margin-top: 2px; font-weight: 500;
-  }
-  .stat-delta.down { color: var(--accent3); }
+/* ATTENDANCE */
+.attend-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.attend-day{
+  aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:8px;font-size:.65rem;font-weight:600;cursor:pointer;
+  border:1.5px solid var(--border);background:var(--bg);
+  transition:.15s;
+}
+.attend-day:hover{transform:scale(1.05)}
+.attend-day.present{background:rgba(56,161,105,.12);border-color:var(--success);color:var(--success)}
+.attend-day.absent{background:rgba(229,62,62,.1);border-color:var(--danger);color:var(--danger)}
+.attend-day.holiday{background:rgba(49,130,206,.1);border-color:var(--info);color:var(--info)}
+.attend-day.ot{background:rgba(232,160,32,.12);border-color:var(--accent);color:#b7791f}
+.attend-day.weekend{background:#f7f7f7;color:#ccc;cursor:default}
+.attend-day.today{box-shadow:0 0 0 2px var(--primary)}
+.attend-day .ad-num{font-size:.85rem;font-weight:800}
 
-  /* ── COURSE GRID ── */
-  .course-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 36px;
-  }
-  .course-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform .25s, box-shadow .25s, border-color .25s;
-    animation: fadeUp .6s both;
-  }
-  .course-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    border-color: rgba(255,255,255,0.14);
-  }
-  .course-thumb {
-    height: 160px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 52px;
-    position: relative;
-    overflow: hidden;
-  }
-  .ct-1 { background: linear-gradient(135deg, #0f2027, #2c5364); }
-  .ct-2 { background: linear-gradient(135deg, #1a0533, #6c1fd1); }
-  .ct-3 { background: linear-gradient(135deg, #1a1000, #7d5a00); }
-  .ct-4 { background: linear-gradient(135deg, #001a15, #005938); }
-  .ct-5 { background: linear-gradient(135deg, #1a0008, #8a0022); }
-  .ct-6 { background: linear-gradient(135deg, #050050, #1400a3); }
-  .course-thumb::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: rgba(0,0,0,.1);
-  }
-  .badge-level {
-    position: absolute; top: 12px; left: 12px;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 99px;
-    font-size: 10px; font-weight: 600;
-    padding: 3px 10px;
-    color: var(--text-hi);
-    z-index: 1;
-    letter-spacing: .5px;
-  }
-  .badge-progress {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: rgba(255,255,255,0.1);
-    z-index: 2;
-  }
-  .badge-progress-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 0 2px 2px 0;
-  }
+/* SALARY SLIP */
+.slip{
+  border:2px solid var(--border);border-radius:var(--radius);
+  font-size:.82rem;background:#fff;
+}
+.slip-header{
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color:#fff;padding:22px 26px;border-radius:var(--radius) var(--radius) 0 0;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.slip-section{padding:16px 26px;border-bottom:1px solid var(--border)}
+.slip-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--border)}
+.slip-row:last-child{border:none}
+.slip-total{
+  background:var(--bg);padding:16px 26px;
+  border-radius:0 0 var(--radius) var(--radius);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.slip-total .total-label{font-weight:700;color:var(--primary)}
+.slip-total .total-val{font-size:1.2rem;font-weight:800;color:var(--success)}
 
-  .course-body { padding: 18px 20px; }
-  .course-cat {
-    font-size: 10.5px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 1px;
-    margin-bottom: 6px;
-  }
-  .course-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 15.5px; font-weight: 700;
-    line-height: 1.35; margin-bottom: 10px;
-    letter-spacing: -0.2px;
-  }
-  .course-meta {
-    display: flex; align-items: center; gap: 14px;
-    font-size: 12px; color: var(--text-lo);
-  }
-  .course-meta-item { display: flex; align-items: center; gap: 5px; }
-  .course-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 20px 16px;
-    border-top: 1px solid var(--border);
-  }
-  .instructor { display: flex; align-items: center; gap: 8px; }
-  .inst-av {
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    font-size: 11px; font-weight: 700;
-    color: #fff;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .inst-name { font-size: 12px; color: var(--text-mid); }
-  .course-rating { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--accent4); }
+/* CHARTS placeholder */
+.chart-box{
+  height:200px;background:var(--bg);border-radius:var(--radius-sm);
+  display:flex;align-items:flex-end;gap:6px;padding:16px;
+  position:relative;overflow:hidden;
+}
+.chart-bar{
+  flex:1;border-radius:4px 4px 0 0;min-height:4px;
+  background: linear-gradient(180deg, var(--accent), var(--primary));
+  position:relative;transition:.3s;
+}
+.chart-bar:hover{opacity:.8}
+.chart-bar span{
+  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  font-size:.6rem;font-weight:700;color:var(--primary);white-space:nowrap;
+}
 
-  /* ── TWO-COL LAYOUT ── */
-  .two-col { display: grid; grid-template-columns: 1fr 340px; gap: 24px; margin-bottom: 36px; }
+/* RESPONSIVE */
+@media(max-width:900px){
+  :root{--sidebar-w:220px}
+}
+@media(max-width:700px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none}
+  .main{margin-left:0}
+  .header{left:0}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
 
-  /* ── ACTIVITY PANEL ── */
-  .panel {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-  }
-  .panel-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px; font-weight: 700;
-    margin-bottom: 20px;
-  }
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(26,58,92,.2);border-radius:3px}
 
-  .activity-item {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .activity-item:last-child { border-bottom: none; }
-  .act-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    margin-top: 4px; flex-shrink: 0;
-  }
-  .act-text { font-size: 13.5px; color: var(--text-mid); line-height: 1.5; }
-  .act-text strong { color: var(--text-hi); font-weight: 500; }
-  .act-time { font-size: 11px; color: var(--text-lo); margin-top: 3px; }
+/* PRINT */
+@media print{
+  .sidebar,.header,.no-print{display:none!important}
+  .main{margin:0;padding:0}
+  body{background:#fff}
+}
 
-  /* ── LEADERBOARD ── */
-  .lb-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 11px 0;
-    border-bottom: 1px solid var(--border);
-    transition: background .2s;
-  }
-  .lb-item:last-child { border-bottom: none; }
-  .lb-rank {
-    font-family: 'Syne', sans-serif;
-    font-size: 15px; font-weight: 800;
-    width: 26px; text-align: center;
-    color: var(--text-lo);
-    flex-shrink: 0;
-  }
-  .lb-rank.gold   { color: #ffd700; }
-  .lb-rank.silver { color: #c0c0c0; }
-  .lb-rank.bronze { color: #cd7f32; }
-  .lb-av {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    font-size: 13px; font-weight: 700; color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .lb-info { flex: 1; min-width: 0; }
-  .lb-name { font-size: 13.5px; font-weight: 500; }
-  .lb-pts {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px; font-weight: 700;
-    color: var(--accent);
-  }
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:20px}
+.tab-btn{
+  padding:9px 18px;border:none;background:none;cursor:pointer;
+  font-size:.82rem;font-weight:600;color:var(--text-muted);font-family:inherit;
+  border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s;
+}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary)}
+.tab-content{display:none}
+.tab-content.active{display:block}
 
-  /* ── PROGRESS BARS ── */
-  .progress-list { display: flex; flex-direction: column; gap: 18px; }
-  .prog-item {}
-  .prog-head { display: flex; justify-content: space-between; margin-bottom: 8px; }
-  .prog-name { font-size: 13.5px; font-weight: 500; }
-  .prog-pct { font-size: 13px; font-weight: 700; color: var(--accent); }
-  .prog-track {
-    height: 6px; background: rgba(255,255,255,0.07);
-    border-radius: 99px; overflow: hidden;
-  }
-  .prog-fill {
-    height: 100%; border-radius: 99px;
-    background: linear-gradient(90deg, var(--accent2), var(--accent));
-    transition: width 1s cubic-bezier(.4,0,.2,1);
-  }
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:.4s}
 
-  /* ── UPCOMING ── */
-  .upcoming-item {
-    display: flex; gap: 14px; align-items: center;
-    padding: 13px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .upcoming-item:last-child { border-bottom: none; }
-  .date-block {
-    width: 44px; height: 50px;
-    background: var(--bg-glass);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .date-d {
-    font-family: 'Syne', sans-serif;
-    font-size: 18px; font-weight: 800;
-    line-height: 1; color: var(--accent);
-  }
-  .date-m { font-size: 10px; color: var(--text-lo); font-weight: 500; text-transform: uppercase; }
-  .upcoming-info { flex: 1; }
-  .upcoming-title { font-size: 13.5px; font-weight: 500; margin-bottom: 3px; }
-  .upcoming-sub { font-size: 12px; color: var(--text-lo); }
-  .tag-pill {
-    font-size: 10.5px; padding: 3px 9px;
-    border-radius: 99px; font-weight: 600;
-    letter-spacing: .3px;
-  }
-  .tag-live { background: rgba(255,107,107,0.15); color: var(--accent3); }
-  .tag-quiz { background: rgba(249,199,79,0.15); color: var(--accent4); }
-  .tag-new  { background: rgba(0,229,160,0.15);  color: var(--accent); }
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.info-item .ii-label{font-size:.7rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.info-item .ii-val{font-size:.88rem;font-weight:600;color:var(--text);margin-top:3px}
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity:0; transform: translateY(20px); }
-    to   { opacity:1; transform: translateY(0); }
-  }
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:999;
+  background:#fff;border-radius:var(--radius-sm);
+  padding:14px 20px;box-shadow:var(--shadow-lg);
+  border-left:4px solid var(--success);
+  display:flex;align-items:center;gap:10px;
+  font-size:.83rem;font-weight:600;color:var(--text);
+  transform:translateX(120%);transition:.3s cubic-bezier(.22,.68,0,1.2);
+  max-width:320px;
+}
+.toast.show{transform:none}
+.toast i{color:var(--success);font-size:1rem}
 
-  .stat-card:nth-child(1) { animation-delay:.05s }
-  .stat-card:nth-child(2) { animation-delay:.1s }
-  .stat-card:nth-child(3) { animation-delay:.15s }
-  .stat-card:nth-child(4) { animation-delay:.2s }
-  .course-card:nth-child(1) { animation-delay:.1s }
-  .course-card:nth-child(2) { animation-delay:.15s }
-  .course-card:nth-child(3) { animation-delay:.2s }
-  .course-card:nth-child(4) { animation-delay:.25s }
-  .course-card:nth-child(5) { animation-delay:.3s }
-  .course-card:nth-child(6) { animation-delay:.35s }
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
+.dot-green{background:var(--success)}
+.dot-red{background:var(--danger)}
+.dot-gold{background:var(--accent)}
 
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-
-  /* ── CTA BUTTON ── */
-  .btn-primary {
-    background: var(--accent);
-    color: #080c14;
-    border: none;
-    padding: 11px 22px;
-    border-radius: 99px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13.5px; font-weight: 600;
-    cursor: pointer;
-    transition: opacity .2s, transform .15s;
-    display: inline-flex; align-items: center; gap: 7px;
-  }
-  .btn-primary:hover { opacity: .85; transform: scale(1.03); }
-
-  .btn-ghost {
-    background: var(--bg-glass);
-    border: 1px solid var(--border);
-    color: var(--text-mid);
-    padding: 11px 22px;
-    border-radius: 99px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13.5px; font-weight: 500;
-    cursor: pointer;
-    transition: border-color .2s, color .2s;
-  }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* ── TABS ── */
-  .tabs { display: flex; gap: 4px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 99px; padding: 4px; width: fit-content; margin-bottom: 24px; }
-  .tab {
-    padding: 8px 20px;
-    border-radius: 99px;
-    font-size: 13px;
-    cursor: pointer;
-    color: var(--text-lo);
-    transition: all .2s;
-    font-weight: 500;
-  }
-  .tab.active { background: var(--accent); color: #080c14; font-weight: 600; }
-
-  /* ── OVERVIEW CHIP ── */
-  .chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(0,229,160,0.1);
-    border: 1px solid rgba(0,229,160,0.2);
-    border-radius: 99px;
-    padding: 5px 12px;
-    font-size: 12px; color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 14px;
-  }
-  .chip-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-  .cert-card {
-    background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(0,229,160,0.1));
-    border: 1px solid rgba(108,99,255,0.25);
-    border-radius: var(--radius-lg);
-    padding: 22px 24px;
-    display: flex; align-items: center; gap: 18px;
-    margin-top: 20px;
-  }
-  .cert-icon { font-size: 36px; }
-  .cert-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-  .cert-sub { font-size: 12.5px; color: var(--text-mid); }
-
-  /* ── MOBILE ── */
-  .hamburger { display: none; font-size: 22px; cursor: pointer; color: var(--text-hi); }
-  @media (max-width: 1100px) {
-    .course-grid { grid-template-columns: repeat(2,1fr); }
-    .stats-strip { grid-template-columns: repeat(2,1fr); }
-  }
-  @media (max-width: 860px) {
-    .sidebar { transform: translateX(-100%); }
-    .sidebar.open { transform: translateX(0); }
-    .main { margin-left: 0; }
-    .hamburger { display: flex; }
-    .two-col { grid-template-columns: 1fr; }
-    .hero-stats { display: none; }
-    .content { padding: 20px; }
-  }
-  @media (max-width: 600px) {
-    .course-grid { grid-template-columns: 1fr; }
-    .stats-strip { grid-template-columns: 1fr 1fr; }
-    .search-bar { display: none; }
-  }
+select.filter-select{
+  padding:7px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  font-size:.8rem;font-family:inherit;background:#fff;color:var(--text);cursor:pointer;
+}
 </style>
 </head>
-<body>
+<body class="lang-km">
 
-<!-- ── SIDEBAR ── -->
-<aside class="sidebar" id="sidebar">
-  <div class="logo">
-    <div class="logo-icon">📚</div>
-    <span class="logo-text">Learn<span>ify</span></span>
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+  <div class="login-bg-shape"></div>
+  <div class="login-bg-shape"></div>
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-icon"><i class="fas fa-building"></i></div>
+      <h1 id="loginTitle">ប្រព័ន្ធគ្រប់គ្រងបុគ្គលិក</h1>
+      <p id="loginSub">Employee Management System v2.0</p>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('km',this)" id="loginLangKm">ខ្មែរ</button>
+      <button class="lang-btn" onclick="setLang('en',this)" id="loginLangEn">English</button>
+    </div>
+    <div class="form-group">
+      <label id="lbUser">ឈ្មោះអ្នកប្រើប្រាស់</label>
+      <div class="input-wrap">
+        <i class="fas fa-user"></i>
+        <input type="text" id="username" placeholder="admin" value="admin">
+      </div>
+    </div>
+    <div class="form-group">
+      <label id="lbPass">ពាក្យសម្ងាត់</label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" placeholder="••••••••" value="1234">
+      </div>
+    </div>
+    <button class="btn-login" onclick="doLogin()"><span id="lbLoginBtn">ចូលប្រើប្រាស់</span></button>
+    <div class="login-footer">admin / 1234 &nbsp;|&nbsp; v2.0 © 2025</div>
   </div>
-
-  <div class="nav-section">
-    <div class="nav-label">Menu</div>
-    <a class="nav-item active" onclick="setPage('dashboard')">
-      <span class="nav-icon">⊞</span> Dashboard
-    </a>
-    <a class="nav-item" onclick="setPage('courses')">
-      <span class="nav-icon">🎓</span> My Courses
-    </a>
-    <a class="nav-item" onclick="setPage('explore')">
-      <span class="nav-icon">🔭</span> Explore
-    </a>
-    <a class="nav-item" onclick="setPage('progress')">
-      <span class="nav-icon">📈</span> Progress
-    </a>
-    <a class="nav-item" onclick="setPage('assignments')">
-      <span class="nav-icon">📝</span> Assignments
-      <span class="nav-badge">3</span>
-    </a>
-  </div>
-
-  <div class="nav-section" style="margin-top:16px">
-    <div class="nav-label">Community</div>
-    <a class="nav-item" onclick="setPage('forum')">
-      <span class="nav-icon">💬</span> Forum
-    </a>
-    <a class="nav-item" onclick="setPage('leaderboard')">
-      <span class="nav-icon">🏆</span> Leaderboard
-    </a>
-    <a class="nav-item" onclick="setPage('events')">
-      <span class="nav-icon">📅</span> Live Events
-      <span class="nav-badge">2</span>
-    </a>
-  </div>
-
-  <div class="nav-section" style="margin-top:16px">
-    <div class="nav-label">Account</div>
-    <a class="nav-item" onclick="setPage('profile')">
-      <span class="nav-icon">👤</span> Profile
-    </a>
-    <a class="nav-item" onclick="setPage('settings')">
-      <span class="nav-icon">⚙️</span> Settings
-    </a>
-  </div>
-
-  <div class="sidebar-footer">
-    <div class="user-pill">
-      <div class="user-avatar">AJ</div>
-      <div class="user-info">
-        <div class="user-name">Alex Johnson</div>
-        <div class="user-role">Pro Learner · Level 12</div>
-      </div>
-      <span style="color:var(--text-lo);font-size:14px;">⋯</span>
-    </div>
-  </div>
-</aside>
-
-<!-- ── MAIN ── -->
-<div class="main">
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <span class="hamburger" onclick="toggleSidebar()">☰</span>
-    <h1 class="topbar-title" id="page-title">Dashboard</h1>
-
-    <div class="search-bar">
-      <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Search courses, topics…">
-    </div>
-
-    <div class="topbar-actions">
-      <div class="icon-btn" title="Notifications">
-        🔔
-        <span class="notif-dot"></span>
-      </div>
-      <div class="icon-btn" title="Messages">💌</div>
-      <div class="icon-btn" title="Achievements">⚡</div>
-    </div>
-  </header>
-
-  <!-- CONTENT -->
-  <main class="content" id="content">
-
-    <!-- ── HERO ── -->
-    <div class="hero">
-      <div class="hero-orb"></div>
-      <div class="hero-text">
-        <div class="chip"><span class="chip-dot"></span> 3 courses in progress</div>
-        <h2>Welcome back,<br><span>Alex! 👋</span></h2>
-        <p>You've been on a 7-day streak! Keep it up — you're in the top 5% of learners this month.</p>
-        <div style="display:flex;gap:12px;margin-top:22px;">
-          <button class="btn-primary" onclick="setPage('courses')">▶ Continue Learning</button>
-          <button class="btn-ghost" onclick="setPage('explore')">Explore Courses</button>
-        </div>
-      </div>
-      <div class="hero-stats">
-        <div class="h-stat">
-          <div class="h-stat-val">7</div>
-          <div class="h-stat-lbl">Day Streak 🔥</div>
-        </div>
-        <div class="h-stat">
-          <div class="h-stat-val">2,840</div>
-          <div class="h-stat-lbl">XP Points</div>
-        </div>
-        <div class="h-stat">
-          <div class="h-stat-val">14</div>
-          <div class="h-stat-lbl">Completed</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── STATS STRIP ── -->
-    <div class="stats-strip">
-      <div class="stat-card">
-        <div class="stat-icon-wrap si-green">📘</div>
-        <div>
-          <div class="stat-val">18</div>
-          <div class="stat-lbl">Enrolled Courses</div>
-          <div class="stat-delta">↑ 3 this month</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap si-purple">⏱</div>
-        <div>
-          <div class="stat-val">142h</div>
-          <div class="stat-lbl">Learning Hours</div>
-          <div class="stat-delta">↑ 12h this week</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap si-yellow">🏅</div>
-        <div>
-          <div class="stat-val">9</div>
-          <div class="stat-lbl">Certificates Earned</div>
-          <div class="stat-delta">↑ 2 new</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon-wrap si-red">📊</div>
-        <div>
-          <div class="stat-val">#42</div>
-          <div class="stat-lbl">Global Rank</div>
-          <div class="stat-delta down">↓ 3 spots</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── COURSE GRID ── -->
-    <div class="section-head">
-      <h3>Continue Learning</h3>
-      <a class="see-all" onclick="setPage('courses')">View all →</a>
-    </div>
-
-    <div class="tabs" id="course-tabs">
-      <div class="tab active" onclick="switchTab(this,'In Progress')">In Progress</div>
-      <div class="tab" onclick="switchTab(this,'Completed')">Completed</div>
-      <div class="tab" onclick="switchTab(this,'Saved')">Saved</div>
-    </div>
-
-    <div class="course-grid" id="course-grid">
-
-      <div class="course-card" onclick="alert('Opening: Advanced Python & Machine Learning')">
-        <div class="course-thumb ct-2">
-          🐍
-          <span class="badge-level">Advanced</span>
-          <div class="badge-progress"><div class="badge-progress-fill" style="width:72%"></div></div>
-        </div>
-        <div class="course-body">
-          <div class="course-cat" style="color:var(--accent2)">Python · ML</div>
-          <div class="course-title">Advanced Python & Machine Learning</div>
-          <div class="course-meta">
-            <span class="course-meta-item">📖 48 lessons</span>
-            <span class="course-meta-item">⏱ 18h 30m</span>
-            <span class="course-meta-item" style="color:var(--accent)">72%</span>
-          </div>
-        </div>
-        <div class="course-footer">
-          <div class="instructor">
-            <div class="inst-av" style="background:linear-gradient(135deg,#667eea,#764ba2)">SM</div>
-            <span class="inst-name">Sarah Mitchell</span>
-          </div>
-          <div class="course-rating">★ 4.9</div>
-        </div>
-      </div>
-
-      <div class="course-card" onclick="alert('Opening: React & Next.js Mastery')">
-        <div class="course-thumb ct-1">
-          ⚛️
-          <span class="badge-level">Intermediate</span>
-          <div class="badge-progress"><div class="badge-progress-fill" style="width:45%"></div></div>
-        </div>
-        <div class="course-body">
-          <div class="course-cat" style="color:#61dafb">Frontend · React</div>
-          <div class="course-title">React & Next.js Mastery 2024</div>
-          <div class="course-meta">
-            <span class="course-meta-item">📖 62 lessons</span>
-            <span class="course-meta-item">⏱ 24h</span>
-            <span class="course-meta-item" style="color:var(--accent)">45%</span>
-          </div>
-        </div>
-        <div class="course-footer">
-          <div class="instructor">
-            <div class="inst-av" style="background:linear-gradient(135deg,#f093fb,#f5576c)">JL</div>
-            <span class="inst-name">James Liu</span>
-          </div>
-          <div class="course-rating">★ 4.8</div>
-        </div>
-      </div>
-
-      <div class="course-card" onclick="alert('Opening: Data Visualization with D3.js')">
-        <div class="course-thumb ct-4">
-          📊
-          <span class="badge-level">Beginner</span>
-          <div class="badge-progress"><div class="badge-progress-fill" style="width:28%"></div></div>
-        </div>
-        <div class="course-body">
-          <div class="course-cat" style="color:var(--accent)">Data · Visualization</div>
-          <div class="course-title">Data Visualization with D3.js</div>
-          <div class="course-meta">
-            <span class="course-meta-item">📖 35 lessons</span>
-            <span class="course-meta-item">⏱ 12h</span>
-            <span class="course-meta-item" style="color:var(--accent)">28%</span>
-          </div>
-        </div>
-        <div class="course-footer">
-          <div class="instructor">
-            <div class="inst-av" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">MK</div>
-            <span class="inst-name">Maria Khan</span>
-          </div>
-          <div class="course-rating">★ 4.7</div>
-        </div>
-      </div>
-
-      <div class="course-card" onclick="alert('Opening: Cloud Architecture on AWS')">
-        <div class="course-thumb ct-3">
-          ☁️
-          <span class="badge-level">Advanced</span>
-          <div class="badge-progress"><div class="badge-progress-fill" style="width:60%"></div></div>
-        </div>
-        <div class="course-body">
-          <div class="course-cat" style="color:var(--accent4)">Cloud · AWS</div>
-          <div class="course-title">Cloud Architecture on AWS</div>
-          <div class="course-meta">
-            <span class="course-meta-item">📖 54 lessons</span>
-            <span class="course-meta-item">⏱ 20h</span>
-            <span class="course-meta-item" style="color:var(--accent)">60%</span>
-          </div>
-        </div>
-        <div class="course-footer">
-          <div class="instructor">
-            <div class="inst-av" style="background:linear-gradient(135deg,#fa8231,#f7b731)">TN</div>
-            <span class="inst-name">Tom Nakamura</span>
-          </div>
-          <div class="course-rating">★ 4.9</div>
-        </div>
-      </div>
-
-      <div class="course-card" onclick="alert('Opening: UI/UX Design Fundamentals')">
-        <div class="course-thumb ct-5">
-          🎨
-          <span class="badge-level">Beginner</span>
-          <div class="badge-progress"><div class="badge-progress-fill" style="width:15%"></div></div>
-        </div>
-        <div class="course-body">
-          <div class="course-cat" style="color:var(--accent3)">Design · UX</div>
-          <div class="course-title">UI/UX Design Fundamentals</div>
-          <div class="course-meta">
-            <span class="course-meta-item">📖 40 lessons</span>
-            <span class="course-meta-item">⏱ 16h</span>
-            <span class="course-meta-item" style="color:var(--accent)">15%</span>
-          </div>
-        </div>
-        <div class="course-footer">
-          <div class="instructor">
-            <div class="inst-av" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb)">ER</div>
-            <span class="inst-name">Elena Ross</span>
-          </div>
-          <div class="course-rating">★ 4.6</div>
-        </div>
-      </div>
-
-      <div class="course-card" onclick="alert('Opening: Kubernetes & DevOps')">
-        <div class="course-thumb ct-6">
-          🚀
-          <span class="badge-level">Advanced</span>
-          <div class="badge-progress"><div class="badge-progress-fill" style="width:5%"></div></div>
-        </div>
-        <div class="course-body">
-          <div class="course-cat" style="color:#7b9cf7">DevOps · K8s</div>
-          <div class="course-title">Kubernetes & Modern DevOps</div>
-          <div class="course-meta">
-            <span class="course-meta-item">📖 70 lessons</span>
-            <span class="course-meta-item">⏱ 28h</span>
-            <span class="course-meta-item" style="color:var(--accent)">5%</span>
-          </div>
-        </div>
-        <div class="course-footer">
-          <div class="instructor">
-            <div class="inst-av" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">DB</div>
-            <span class="inst-name">David Berg</span>
-          </div>
-          <div class="course-rating">★ 4.8</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ── TWO-COL ── -->
-    <div class="two-col">
-
-      <!-- LEFT: LEARNING PROGRESS + UPCOMING -->
-      <div style="display:flex;flex-direction:column;gap:24px;">
-
-        <div class="panel">
-          <div class="panel-title">Skill Progress</div>
-          <div class="progress-list">
-            <div class="prog-item">
-              <div class="prog-head">
-                <span class="prog-name">Python & Data Science</span>
-                <span class="prog-pct">82%</span>
-              </div>
-              <div class="prog-track"><div class="prog-fill" style="width:82%"></div></div>
-            </div>
-            <div class="prog-item">
-              <div class="prog-head">
-                <span class="prog-name">Frontend Development</span>
-                <span class="prog-pct">65%</span>
-              </div>
-              <div class="prog-track"><div class="prog-fill" style="width:65%"></div></div>
-            </div>
-            <div class="prog-item">
-              <div class="prog-head">
-                <span class="prog-name">Cloud & Infrastructure</span>
-                <span class="prog-pct">48%</span>
-              </div>
-              <div class="prog-track"><div class="prog-fill" style="width:48%"></div></div>
-            </div>
-            <div class="prog-item">
-              <div class="prog-head">
-                <span class="prog-name">UI/UX Design</span>
-                <span class="prog-pct">30%</span>
-              </div>
-              <div class="prog-track"><div class="prog-fill" style="width:30%"></div></div>
-            </div>
-            <div class="prog-item">
-              <div class="prog-head">
-                <span class="prog-name">Machine Learning</span>
-                <span class="prog-pct">57%</span>
-              </div>
-              <div class="prog-track"><div class="prog-fill" style="width:57%"></div></div>
-            </div>
-          </div>
-
-          <div class="cert-card" style="margin-top:24px">
-            <div class="cert-icon">🎓</div>
-            <div>
-              <div class="cert-title">Python Fundamentals — Certificate Ready!</div>
-              <div class="cert-sub">You've completed all requirements. Claim your certificate now.</div>
-            </div>
-            <button class="btn-primary" style="flex-shrink:0" onclick="alert('🎉 Certificate claimed!')">Claim</button>
-          </div>
-        </div>
-
-        <!-- UPCOMING EVENTS -->
-        <div class="panel">
-          <div class="panel-title">Upcoming Events</div>
-          <div class="upcoming-item">
-            <div class="date-block"><div class="date-d">22</div><div class="date-m">Apr</div></div>
-            <div class="upcoming-info">
-              <div class="upcoming-title">Live Q&A: Machine Learning Interview Prep</div>
-              <div class="upcoming-sub">2:00 PM • Sarah Mitchell • 240 attending</div>
-            </div>
-            <span class="tag-pill tag-live">LIVE</span>
-          </div>
-          <div class="upcoming-item">
-            <div class="date-block"><div class="date-d">24</div><div class="date-m">Apr</div></div>
-            <div class="upcoming-info">
-              <div class="upcoming-title">React Mid-Course Assessment</div>
-              <div class="upcoming-sub">Quiz • 30 questions • 45 minutes</div>
-            </div>
-            <span class="tag-pill tag-quiz">QUIZ</span>
-          </div>
-          <div class="upcoming-item">
-            <div class="date-block"><div class="date-d">28</div><div class="date-m">Apr</div></div>
-            <div class="upcoming-info">
-              <div class="upcoming-title">New Course Launch: GenAI with LangChain</div>
-              <div class="upcoming-sub">By James Liu • Early Access</div>
-            </div>
-            <span class="tag-pill tag-new">NEW</span>
-          </div>
-          <div class="upcoming-item">
-            <div class="date-block"><div class="date-d">01</div><div class="date-m">May</div></div>
-            <div class="upcoming-info">
-              <div class="upcoming-title">Hackathon: Build with AI APIs</div>
-              <div class="upcoming-sub">48hr challenge • $2,000 prize pool</div>
-            </div>
-            <span class="tag-pill tag-live">EVENT</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: ACTIVITY + LEADERBOARD -->
-      <div style="display:flex;flex-direction:column;gap:24px;">
-
-        <!-- LEADERBOARD -->
-        <div class="panel">
-          <div class="panel-title">🏆 Leaderboard <span style="font-size:12px;color:var(--text-lo);font-family:'DM Sans'">This Week</span></div>
-          <div class="lb-item">
-            <div class="lb-rank gold">1</div>
-            <div class="lb-av" style="background:linear-gradient(135deg,#f093fb,#f5576c)">PK</div>
-            <div class="lb-info"><div class="lb-name">Priya Kumar</div><div style="font-size:11px;color:var(--text-lo)">12 courses · 48h</div></div>
-            <div class="lb-pts">4,820</div>
-          </div>
-          <div class="lb-item">
-            <div class="lb-rank silver">2</div>
-            <div class="lb-av" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">RW</div>
-            <div class="lb-info"><div class="lb-name">Ryan Walsh</div><div style="font-size:11px;color:var(--text-lo)">9 courses · 36h</div></div>
-            <div class="lb-pts">3,960</div>
-          </div>
-          <div class="lb-item">
-            <div class="lb-rank bronze">3</div>
-            <div class="lb-av" style="background:linear-gradient(135deg,#fa8231,#f7b731)">SO</div>
-            <div class="lb-info"><div class="lb-name">Sofia Ortega</div><div style="font-size:11px;color:var(--text-lo)">11 courses · 41h</div></div>
-            <div class="lb-pts">3,650</div>
-          </div>
-          <div class="lb-item" style="background:rgba(0,229,160,0.04);border-radius:var(--radius-sm);padding:11px 8px;">
-            <div class="lb-rank" style="color:var(--accent)">42</div>
-            <div class="lb-av" style="background:linear-gradient(135deg,#667eea,#764ba2)">AJ</div>
-            <div class="lb-info"><div class="lb-name">You (Alex)</div><div style="font-size:11px;color:var(--text-lo)">7 courses · 28h</div></div>
-            <div class="lb-pts">2,840</div>
-          </div>
-          <div class="lb-item">
-            <div class="lb-rank">43</div>
-            <div class="lb-av" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">LM</div>
-            <div class="lb-info"><div class="lb-name">Liam Moore</div><div style="font-size:11px;color:var(--text-lo)">6 courses · 22h</div></div>
-            <div class="lb-pts">2,710</div>
-          </div>
-          <div style="text-align:center;margin-top:14px;">
-            <a class="see-all" onclick="setPage('leaderboard')">View full leaderboard →</a>
-          </div>
-        </div>
-
-        <!-- ACTIVITY FEED -->
-        <div class="panel">
-          <div class="panel-title">Recent Activity</div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--accent)"></div>
-            <div>
-              <div class="act-text">Completed <strong>Lesson 34: Neural Networks</strong> in Advanced Python & ML</div>
-              <div class="act-time">2 hours ago</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--accent2)"></div>
-            <div>
-              <div class="act-text">Earned badge <strong>🔥 7-Day Streak</strong></div>
-              <div class="act-time">Today, 9:14 AM</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--accent4)"></div>
-            <div>
-              <div class="act-text">Scored <strong>94% on React Hooks Quiz</strong> — Top 10%!</div>
-              <div class="act-time">Yesterday</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--accent3)"></div>
-            <div>
-              <div class="act-text">Joined <strong>AWS Cloud Architecture</strong> course</div>
-              <div class="act-time">2 days ago</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="act-dot" style="background:var(--accent)"></div>
-            <div>
-              <div class="act-text">Posted answer in <strong>Python Forum</strong> — 12 upvotes</div>
-              <div class="act-time">3 days ago</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </main>
 </div>
 
+<!-- MAIN APP -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark"><i class="fas fa-building"></i></div>
+      <div class="logo-text">
+        <h2 id="sb-title">ក្រុមហ៊ុន ABC</h2>
+        <p id="sb-sub">គ្រប់គ្រងបុគ្គលិក</p>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section t-dashboard">ទំព័រដើម</div>
+      <div class="nav-item active" onclick="showPage('dashboard',this)"><i class="fas fa-th-large"></i><span class="t-dashboard">ផ្ទាំងគ្រប់គ្រង</span></div>
+
+      <div class="nav-section t-emp">បុគ្គលិក</div>
+      <div class="nav-item" onclick="showPage('employees',this)"><i class="fas fa-users"></i><span class="t-empList">បញ្ជីបុគ្គលិក</span></div>
+      <div class="nav-item" onclick="showPage('addEmp',this)"><i class="fas fa-user-plus"></i><span class="t-addEmp">បន្ថែមបុគ្គលិក</span></div>
+      <div class="nav-item" onclick="showPage('empCard',this)"><i class="fas fa-id-card"></i><span class="t-empCard">កាតបុគ្គលិក</span></div>
+
+      <div class="nav-section t-attend">វត្តមាន</div>
+      <div class="nav-item" onclick="showPage('attendance',this)"><i class="fas fa-calendar-check"></i><span class="t-attendMark">ចុះវត្តមាន</span><span class="nav-badge">ថ្ងៃនេះ</span></div>
+      <div class="nav-item" onclick="showPage('attendReport',this)"><i class="fas fa-chart-bar"></i><span class="t-attendReport">របាយការណ៍វត្តមាន</span></div>
+
+      <div class="nav-section t-payroll">ប្រាក់ខែ</div>
+      <div class="nav-item" onclick="showPage('overtime',this)"><i class="fas fa-clock"></i><span class="t-overtime">ថែមម៉ោង</span></div>
+      <div class="nav-item" onclick="showPage('holiday',this)"><i class="fas fa-umbrella-beach"></i><span class="t-holiday">ឈប់សម្រាក</span></div>
+      <div class="nav-item" onclick="showPage('allowance',this)"><i class="fas fa-hand-holding-usd"></i><span class="t-allowance">ប្រាក់ឧបត្ថម្ភ</span></div>
+      <div class="nav-item" onclick="showPage('salary',this)"><i class="fas fa-money-bill-wave"></i><span class="t-salary">ប្រាក់បៀវត្ស</span></div>
+      <div class="nav-item" onclick="showPage('salaryReport',this)"><i class="fas fa-file-invoice-dollar"></i><span class="t-salaryReport">របាយការណ៍ប្រាក់ខែ</span></div>
+      <div class="nav-item" onclick="showPage('otReport',this)"><i class="fas fa-file-alt"></i><span class="t-otReport">របាយការណ៍ថែមម៉ោង</span></div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="avatar" id="sbAvatar">A</div>
+        <div class="uinfo">
+          <div class="uname" id="sbUsername">Administrator</div>
+          <div class="urole" id="sbRole">អ្នកគ្រប់គ្រង</div>
+        </div>
+        <i class="fas fa-sign-out-alt" style="color:rgba(255,255,255,.4);cursor:pointer;font-size:.85rem" onclick="doLogout()" title="Logout"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-title" id="headerTitle">ផ្ទាំងគ្រប់គ្រង <span id="headerDate"></span></div>
+    <div class="header-actions">
+      <div class="lang-switch">
+        <button onclick="setLang('km')" id="appLangKm" class="active">ខ្មែរ</button>
+        <button onclick="setLang('en')" id="appLangEn">EN</button>
+      </div>
+      <div class="hbtn" onclick="showPage('attendance',document.querySelector('.nav-item:nth-child(8)'))"><i class="fas fa-bell"></i><div class="notif-dot"></div></div>
+      <div class="hbtn"><i class="fas fa-cog"></i></div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-val" id="totalEmpCount">12</div>
+          <div class="stat-label t-totalEmp">បុគ្គលិកសរុប</div>
+          <div class="stat-change up">↑ 2 t-thisMonth</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon"><i class="fas fa-user-check"></i></div>
+          <div class="stat-val" id="presentCount">10</div>
+          <div class="stat-label t-presentToday">មានវត្តមានថ្ងៃនេះ</div>
+          <div class="stat-change up">↑ 83%</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon"><i class="fas fa-user-times"></i></div>
+          <div class="stat-val" id="absentCount">2</div>
+          <div class="stat-label t-absentToday">អវត្តមានថ្ងៃនេះ</div>
+          <div class="stat-change down">↓ 17%</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+          <div class="stat-val">$8,400</div>
+          <div class="stat-label t-totalSalary">ប្រាក់ខែសរុប</div>
+          <div class="stat-change up">↑ 5%</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;flex-wrap:wrap">
+        <div class="card" style="grid-column:1/-1">
+          <div class="card-header">
+            <h3 class="t-recentAttend">វត្តមានថ្ងៃនេះ</h3>
+            <button class="btn btn-primary btn-sm" onclick="showPage('attendance')"><i class="fas fa-calendar-check"></i> <span class="t-mark">ចុះ</span></button>
+          </div>
+          <div class="card-body" style="padding:0">
+            <div class="table-wrap">
+              <table id="dashTable">
+                <thead><tr>
+                  <th class="t-empName">ឈ្មោះបុគ្គលិក</th>
+                  <th class="t-dept">នាយកដ្ឋាន</th>
+                  <th class="t-status">ស្ថានភាព</th>
+                  <th class="t-inTime">ម៉ោងចូល</th>
+                  <th class="t-outTime">ម៉ោងចេញ</th>
+                </tr></thead>
+                <tbody id="dashTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3 class="t-monthlyAttend">វត្តមានប្រចាំខែ</h3></div>
+          <div class="card-body">
+            <div class="chart-box" id="monthChart"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3 class="t-salaryDist">ការបែងចែកប្រាក់ខែ</h3></div>
+          <div class="card-body">
+            <div id="deptList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMPLOYEES LIST -->
+    <div class="page" id="page-employees">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-empList">បញ្ជីបុគ្គលិក</h3>
+          <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="empSearch" placeholder="ស្វែងរក..." oninput="renderEmployeeTable()"></div>
+          <select class="filter-select" id="deptFilter" onchange="renderEmployeeTable()">
+            <option value="">-- នាយកដ្ឋានទាំងអស់ --</option>
+            <option>IT</option><option>HR</option><option>Finance</option><option>Operations</option>
+          </select>
+          <button class="btn btn-primary" onclick="showPage('addEmp')"><i class="fas fa-plus"></i> <span class="t-addEmp">បន្ថែម</span></button>
+          <button class="btn btn-success btn-sm" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+          <button class="btn btn-danger btn-sm" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div class="table-wrap">
+            <table>
+              <thead><tr>
+                <th>#</th>
+                <th class="t-empName">ឈ្មោះ</th>
+                <th class="t-position">តួនាទី</th>
+                <th class="t-dept">នាយកដ្ឋាន</th>
+                <th class="t-phone">ទូរស័ព្ទ</th>
+                <th class="t-salary2">ប្រាក់ខែ</th>
+                <th class="t-status">ស្ថានភាព</th>
+                <th class="t-action">សកម្មភាព</th>
+              </tr></thead>
+              <tbody id="empTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD EMPLOYEE -->
+    <div class="page" id="page-addEmp">
+      <div class="card">
+        <div class="card-header"><h3 id="addEmpTitle" class="t-addEmpFull">បន្ថែម/កែប្រែបុគ្គលិក</h3></div>
+        <div class="card-body">
+          <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start">
+            <div>
+              <label style="display:block;font-size:.75rem;font-weight:700;color:var(--primary);margin-bottom:8px" class="t-photo">រូបថត (4x6)</label>
+              <div class="photo-upload" id="photoUploadArea" onclick="document.getElementById('photoInput').click()">
+                <img id="photoPreview" style="display:none">
+                <i class="fas fa-camera" id="photoIcon"></i>
+                <span id="photoText" class="t-clickUpload">ចុចដើម្បីបញ្ចូលរូប</span>
+              </div>
+              <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(this)">
+            </div>
+            <div style="flex:1;min-width:280px">
+              <div class="section-title t-personalInfo">ព័ត៌មានផ្ទាល់ខ្លួន</div>
+              <div class="form-grid">
+                <div class="form-field"><label class="t-fullName">ឈ្មោះពេញ</label><input type="text" id="fName" placeholder="ចាន់ សុទ្ធា"></div>
+                <div class="form-field"><label class="t-nameEn">ឈ្មោះ (English)</label><input type="text" id="fNameEn" placeholder="Chan Sotha"></div>
+                <div class="form-field"><label class="t-gender">ភេទ</label>
+                  <select id="fGender"><option value="" class="t-select">-- ជ្រើសរើស --</option><option value="ប្រុស" class="t-male">ប្រុស</option><option value="ស្រី" class="t-female">ស្រី</option></select>
+                </div>
+                <div class="form-field"><label class="t-dob">ថ្ងៃខែឆ្នាំកំណើត</label><input type="date" id="fDob"></div>
+                <div class="form-field"><label class="t-national">សញ្ជាតិ</label><input type="text" id="fNational" value="ខ្មែរ"></div>
+                <div class="form-field"><label class="t-idCard">លេខអត្តសញ្ញាណប័ណ្ណ</label><input type="text" id="fId" placeholder="012345678"></div>
+                <div class="form-field"><label class="t-phone">លេខទូរស័ព្ទ</label><input type="text" id="fPhone" placeholder="012 xxx xxx"></div>
+                <div class="form-field"><label>Email</label><input type="email" id="fEmail" placeholder="email@company.com"></div>
+                <div class="form-field" style="grid-column:1/-1"><label class="t-address">អាសយដ្ឋាន</label><textarea id="fAddress" placeholder="ផ្ទះ..."></textarea></div>
+              </div>
+            </div>
+          </div>
+          <div class="section-title t-jobInfo" style="margin-top:24px">ព័ត៌មានការងារ</div>
+          <div class="form-grid">
+            <div class="form-field"><label class="t-empId">លេខបុគ្គលិក</label><input type="text" id="fEmpId" placeholder="EMP-001"></div>
+            <div class="form-field"><label class="t-position">តួនាទី</label><input type="text" id="fPosition" placeholder="Software Developer"></div>
+            <div class="form-field"><label class="t-dept">នាយកដ្ឋាន</label>
+              <select id="fDept"><option value="">-- ជ្រើស --</option><option>IT</option><option>HR</option><option>Finance</option><option>Operations</option></select>
+            </div>
+            <div class="form-field"><label class="t-startDate">ថ្ងៃចាប់ផ្តើមការងារ</label><input type="date" id="fStart"></div>
+            <div class="form-field"><label class="t-baseSalary">ប្រាក់ខែមូលដ្ឋាន ($)</label><input type="number" id="fSalary" placeholder="500"></div>
+            <div class="form-field"><label class="t-bankAcc">គណនីធនាគារ</label><input type="text" id="fBank" placeholder="ABA - 001234567"></div>
+            <div class="form-field"><label class="t-contract">ប្រភេទកិច្ចសន្យា</label>
+              <select id="fContract"><option>Full-time</option><option>Part-time</option><option>Contract</option></select>
+            </div>
+            <div class="form-field"><label class="t-status">ស្ថានភាព</label>
+              <select id="fStatus"><option value="Active" class="t-active">Active</option><option value="Inactive" class="t-inactive">Inactive</option></select>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:24px">
+            <button class="btn btn-outline" onclick="clearEmpForm()"><i class="fas fa-times"></i> <span class="t-clear">លុប</span></button>
+            <button class="btn btn-primary" onclick="saveEmployee()"><i class="fas fa-save"></i> <span class="t-save">រក្សាទុក</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMPLOYEE CARD -->
+    <div class="page" id="page-empCard">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-empCard">បង្កើតកាតបុគ្គលិក</h3>
+          <select class="filter-select" id="cardEmpSelect" onchange="renderEmpCard()">
+            <option value="">-- ជ្រើសបុគ្គលិក --</option>
+          </select>
+          <button class="btn btn-danger no-print" onclick="printCard()"><i class="fas fa-print"></i> <span class="t-print">បោះពុម្ព</span></button>
+          <button class="btn btn-success no-print" onclick="exportCardPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+        </div>
+        <div class="card-body">
+          <div id="empCardPreview" style="display:inline-block">
+            <div class="emp-card-preview" id="theCard">
+              <div class="card-flag"></div>
+              <div class="card-logo">ABC COMPANY</div>
+              <div style="display:flex;gap:16px;align-items:flex-start">
+                <div>
+                  <div class="card-photo"><img id="cardPhoto" src="" alt="" onerror="this.style.display='none'"></div>
+                </div>
+                <div style="flex:1">
+                  <div class="card-name" id="cardName">-- ជ្រើសបុគ្គលិក --</div>
+                  <div class="card-pos" id="cardPos">--</div>
+                  <div class="card-info">
+                    <div class="card-info-item"><div class="ci-label">ID</div><div class="ci-val" id="cardId">--</div></div>
+                    <div class="card-info-item"><div class="ci-label t-dept">Dept</div><div class="ci-val" id="cardDept">--</div></div>
+                    <div class="card-info-item"><div class="ci-label t-phone">Tel</div><div class="ci-val" id="cardPhone">--</div></div>
+                    <div class="card-info-item"><div class="ci-label t-startDate">Start</div><div class="ci-val" id="cardStart">--</div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-barcode"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTENDANCE -->
+    <div class="page" id="page-attendance">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-attendMark">ចុះវត្តមានប្រចាំថ្ងៃ</h3>
+          <input type="date" id="attendDate" class="filter-select" oninput="renderAttendTable()">
+          <button class="btn btn-success btn-sm" onclick="saveAllAttend()"><i class="fas fa-save"></i> <span class="t-save">រក្សាទុក</span></button>
+          <button class="btn btn-danger btn-sm no-print" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+          <button class="btn btn-success btn-sm no-print" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table>
+            <thead><tr>
+              <th>#</th>
+              <th class="t-empName">ឈ្មោះ</th>
+              <th class="t-dept">នាយកដ្ឋាន</th>
+              <th class="t-status">ស្ថានភាព</th>
+              <th class="t-inTime">ម៉ោងចូល</th>
+              <th class="t-outTime">ម៉ោងចេញ</th>
+              <th class="t-note">ចំណាំ</th>
+            </tr></thead>
+            <tbody id="attendTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTENDANCE REPORT -->
+    <div class="page" id="page-attendReport">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-attendReport">របាយការណ៍វត្តមាន</h3>
+          <select class="filter-select" id="arMonth"><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option></select>
+          <select class="filter-select" id="arYear"><option>2024</option><option selected>2025</option></select>
+          <button class="btn btn-primary btn-sm" onclick="genAttendReport()"><i class="fas fa-sync"></i> <span class="t-generate">បង្កើត</span></button>
+          <button class="btn btn-danger btn-sm" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+          <button class="btn btn-success btn-sm" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table>
+            <thead><tr>
+              <th class="t-empName">ឈ្មោះ</th>
+              <th class="t-dept">នាយកដ្ឋាន</th>
+              <th class="t-present">ថ្ងៃមក</th>
+              <th class="t-absent">ថ្ងៃអវត្តមាន</th>
+              <th class="t-late">ចូលយឺត</th>
+              <th class="t-ot">ថែមម៉ោង</th>
+              <th>%</th>
+            </tr></thead>
+            <tbody id="arBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div id="monthCalendar" style="margin-top:22px"></div>
+    </div>
+
+    <!-- OVERTIME -->
+    <div class="page" id="page-overtime">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-overtime">ថែមម៉ោង</h3>
+          <button class="btn btn-primary" onclick="openOTModal()"><i class="fas fa-plus"></i> <span class="t-addOT">បន្ថែម</span></button>
+          <button class="btn btn-danger btn-sm" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+          <button class="btn btn-success btn-sm" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table>
+            <thead><tr>
+              <th class="t-empName">ឈ្មោះ</th>
+              <th class="t-date">កាលបរិច្ឆេទ</th>
+              <th class="t-otHours">ម៉ោងថែម</th>
+              <th class="t-rate">អត្រា</th>
+              <th class="t-amount">ចំនួនទឹកប្រាក់</th>
+              <th class="t-reason">មូលហេតុ</th>
+              <th class="t-action">សកម្មភាព</th>
+            </tr></thead>
+            <tbody id="otBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOLIDAY WORK -->
+    <div class="page" id="page-holiday">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-holiday">ថ្ងៃឈប់សម្រាក / ធ្វើការថ្ងៃឈប់</h3>
+          <button class="btn btn-primary" onclick="openHolidayModal()"><i class="fas fa-plus"></i> <span class="t-add">បន្ថែម</span></button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table>
+            <thead><tr>
+              <th class="t-date">កាលបរិច្ឆេទ</th>
+              <th class="t-holName">ឈ្មោះថ្ងៃឈប់</th>
+              <th class="t-type">ប្រភេទ</th>
+              <th class="t-empName">បុគ្គលិក</th>
+              <th class="t-pay">ប្រាក់ឈ្នួល</th>
+              <th class="t-action">សកម្មភាព</th>
+            </tr></thead>
+            <tbody id="holidayBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALLOWANCE -->
+    <div class="page" id="page-allowance">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-allowance">ប្រាក់ឧបត្ថម្ភប្រចាំឆ្នាំ</h3>
+          <button class="btn btn-primary" onclick="openAllowModal()"><i class="fas fa-plus"></i> <span class="t-add">បន្ថែម</span></button>
+          <button class="btn btn-danger btn-sm" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table>
+            <thead><tr>
+              <th class="t-empName">ឈ្មោះ</th>
+              <th class="t-year">ឆ្នាំ</th>
+              <th class="t-transport">អ្នកដឹកជញ្ជូន</th>
+              <th class="t-food">អាហារ</th>
+              <th class="t-health">សុខភាព</th>
+              <th class="t-annual">ប្រចាំឆ្នាំ</th>
+              <th class="t-total">សរុប</th>
+              <th class="t-action">សកម្មភាព</th>
+            </tr></thead>
+            <tbody id="allowBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALARY -->
+    <div class="page" id="page-salary">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-salary">គណនាប្រាក់បៀវត្ស</h3>
+          <select class="filter-select" id="salMonth"><option>01</option><option>02</option><option>03</option><option>04</option><option selected>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option></select>
+          <select class="filter-select" id="salYear"><option>2024</option><option selected>2025</option></select>
+          <button class="btn btn-primary" onclick="genSalary()"><i class="fas fa-calculator"></i> <span class="t-calc">គណនា</span></button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table>
+            <thead><tr>
+              <th class="t-empName">ឈ្មោះ</th>
+              <th class="t-dept">នាយកដ្ឋាន</th>
+              <th class="t-baseSalary">ប្រាក់ខែ</th>
+              <th class="t-otPay">OT</th>
+              <th class="t-allowance2">ឧបត្ថម្ភ</th>
+              <th class="t-deduction">កាត់ចេញ</th>
+              <th class="t-netSalary">សុទ្ធ</th>
+              <th class="t-action">Action</th>
+            </tr></thead>
+            <tbody id="salBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALARY REPORT -->
+    <div class="page" id="page-salaryReport">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-salaryReport">របាយការណ៍ប្រាក់ខែ</h3>
+          <select class="filter-select" id="srEmp" onchange="showSlip()">
+            <option value="">-- ជ្រើសបុគ្គលិក --</option>
+          </select>
+          <button class="btn btn-danger btn-sm" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+          <button class="btn btn-success btn-sm" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+          <button class="btn btn-primary btn-sm" onclick="window.print()"><i class="fas fa-print"></i> <span class="t-print">បោះពុម្ព</span></button>
+        </div>
+        <div class="card-body" id="slipArea">
+          <div style="text-align:center;color:var(--text-muted);padding:40px" class="t-selectEmpFirst">ជ្រើសរើសបុគ្គលិកដើម្បីមើលស្លីប</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OT REPORT -->
+    <div class="page" id="page-otReport">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="t-otReport">របាយការណ៍ថែមម៉ោង</h3>
+          <select class="filter-select" id="otrMonth"><option>01</option><option>02</option><option>03</option><option>04</option><option selected>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option></select>
+          <select class="filter-select" id="otrYear"><option>2024</option><option selected>2025</option></select>
+          <button class="btn btn-primary btn-sm" onclick="genOTReport()"><i class="fas fa-sync"></i></button>
+          <button class="btn btn-danger btn-sm" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+          <button class="btn btn-success btn-sm" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table>
+            <thead><tr>
+              <th class="t-empName">ឈ្មោះ</th>
+              <th class="t-dept">នាយកដ្ឋាន</th>
+              <th class="t-totalOTH">ម៉ោងសរុប</th>
+              <th class="t-totalOTPay">ប្រាក់ OT</th>
+              <th class="t-times">ចំនួនដង</th>
+            </tr></thead>
+            <tbody id="otrBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end main -->
+</div><!-- end app -->
+
+<!-- MODALS -->
+<div class="modal-overlay" id="empDetailModal">
+  <div class="modal" style="max-width:800px">
+    <div class="modal-header">
+      <h3 class="t-empDetail">ប្រវត្តិរូបបុគ្គលិក</h3>
+      <button class="btn btn-outline btn-sm" onclick="closeModal('empDetailModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="empDetailBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="otModal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="t-addOT">បន្ថែមថែមម៉ោង</h3><button class="btn btn-outline btn-sm" onclick="closeModal('otModal')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label class="t-empName">បុគ្គលិក</label><select id="otEmp"></select></div>
+        <div class="form-field"><label class="t-date">ថ្ងៃ</label><input type="date" id="otDate"></div>
+        <div class="form-field"><label class="t-otHours">ម៉ោងថែម</label><input type="number" id="otHours" placeholder="2" min="0.5" step="0.5"></div>
+        <div class="form-field"><label class="t-rate">អត្រា (x)</label><input type="number" id="otRate" placeholder="1.5" value="1.5" step="0.5"></div>
+        <div class="form-field" style="grid-column:1/-1"><label class="t-reason">មូលហេតុ</label><textarea id="otReason" placeholder="..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('otModal')" class="t-cancel">បោះបង់</button><button class="btn btn-primary" onclick="saveOT()"><i class="fas fa-save"></i> <span class="t-save">រក្សាទុក</span></button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="holidayModal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="t-holiday">ថ្ងៃឈប់សម្រាក</h3><button class="btn btn-outline btn-sm" onclick="closeModal('holidayModal')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label class="t-date">ថ្ងៃខែ</label><input type="date" id="holDate"></div>
+        <div class="form-field"><label class="t-holName">ឈ្មោះថ្ងៃឈប់</label><input type="text" id="holName" placeholder="ពិធីបុណ្យខ្មែរ"></div>
+        <div class="form-field"><label class="t-type">ប្រភេទ</label><select id="holType"><option class="t-publicHol">ថ្ងៃឈប់ជាតិ</option><option class="t-workHol">ធ្វើការ</option></select></div>
+        <div class="form-field"><label class="t-empName">បុគ្គលិក</label><select id="holEmp"><option value="all" class="t-allEmp">ទាំងអស់</option></select></div>
+        <div class="form-field"><label class="t-pay">ប្រាក់ ($)</label><input type="number" id="holPay" placeholder="0"></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('holidayModal')">បោះបង់</button><button class="btn btn-primary" onclick="saveHoliday()"><i class="fas fa-save"></i> <span class="t-save">រក្សាទុក</span></button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="allowModal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="t-allowance">ប្រាក់ឧបត្ថម្ភ</h3><button class="btn btn-outline btn-sm" onclick="closeModal('allowModal')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label class="t-empName">បុគ្គលិក</label><select id="allowEmp"></select></div>
+        <div class="form-field"><label class="t-year">ឆ្នាំ</label><input type="number" id="allowYear" value="2025"></div>
+        <div class="form-field"><label class="t-transport">ដឹកជញ្ជូន ($)</label><input type="number" id="allowTransport" placeholder="50"></div>
+        <div class="form-field"><label class="t-food">អាហារ ($)</label><input type="number" id="allowFood" placeholder="30"></div>
+        <div class="form-field"><label class="t-health">សុខភាព ($)</label><input type="number" id="allowHealth" placeholder="20"></div>
+        <div class="form-field"><label class="t-annual">ប្រចាំឆ្នាំ ($)</label><input type="number" id="allowAnnual" placeholder="200"></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('allowModal')">បោះបង់</button><button class="btn btn-primary" onclick="saveAllow()"><i class="fas fa-save"></i> <span class="t-save">រក្សាទុក</span></button></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
+
 <script>
-  function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
+// ==================== DATA ====================
+let currentLang = 'km';
+let editEmpId = null;
+
+const T = {
+  km: {
+    dashboard:'ផ្ទាំងគ្រប់គ្រង',empList:'បញ្ជីបុគ្គលិក',addEmp:'បន្ថែមបុគ្គលិក',empCard:'កាតបុគ្គលិក',
+    attendMark:'ចុះវត្តមាន',attendReport:'របាយការណ៍វត្តមាន',overtime:'ថែមម៉ោង',
+    holiday:'ឈប់សម្រាក',allowance:'ប្រាក់ឧបត្ថម្ភ',salary:'ប្រាក់បៀវត្ស',
+    salaryReport:'របាយការណ៍ប្រាក់ខែ',otReport:'របាយការណ៍ថែមម៉ោង',
+    empName:'ឈ្មោះបុគ្គលិក',dept:'នាយកដ្ឋាន',status:'ស្ថានភាព',
+    save:'រក្សាទុក',cancel:'បោះបង់',delete:'លុប',edit:'កែ',view:'មើល',
+    totalEmp:'បុគ្គលិកសរុប',presentToday:'មានវត្តមានថ្ងៃនេះ',absentToday:'អវត្តមានថ្ងៃនេះ',
+    totalSalary:'ប្រាក់ខែសរុប',
+    saved:'រក្សាទុកដោយជោគជ័យ!',deleted:'លុបដោយជោគជ័យ!',
+    present:'មក',absent:'អវត្តមាន',late:'ចូលយឺត',halfday:'កន្លះថ្ងៃ',leave:'ច្បាប់',
+    generate:'បង្កើត',calc:'គណនា',print:'បោះពុម្ព',
+    thisMonth:'ខែនេះ',recentAttend:'វត្តមានថ្ងៃនេះ',mark:'ចុះ',
+    monthlyAttend:'វត្តមានប្រចាំខែ',salaryDist:'ការបែងចែកប្រាក់ខែ',
+    addEmpFull:'បន្ថែម / កែប្រែ ព័ត៌មានបុគ្គលិក',
+    photo:'រូបថត (4x6)',clickUpload:'ចុចដើម្បីបញ្ចូលរូប',
+    personalInfo:'ព័ត៌មានផ្ទាល់ខ្លួន',jobInfo:'ព័ត៌មានការងារ',
+    fullName:'ឈ្មោះពេញ',nameEn:'ឈ្មោះ (English)',gender:'ភេទ',dob:'ថ្ងៃខែឆ្នាំកំណើត',
+    national:'សញ្ជាតិ',idCard:'អត្តសញ្ញាណប័ណ្ណ',phone:'ទូរស័ព្ទ',address:'អាសយដ្ឋាន',
+    empId:'លេខបុគ្គលិក',position:'តួនាទី',startDate:'ថ្ងៃចាប់ផ្តើម',
+    baseSalary:'ប្រាក់ខែ ($)',bankAcc:'គណនីធនាគារ',contract:'ប្រភេទកិច្ចសន្យា',
+    clear:'លុបទិន្នន័យ',empDetail:'ប្រវត្តិរូបបុគ្គលិក',
+    addOT:'បន្ថែមថែមម៉ោង',otHours:'ម៉ោងថែម',rate:'អត្រា',reason:'មូលហេតុ',
+    amount:'ចំនួនទឹកប្រាក់',date:'ថ្ងៃ',holName:'ឈ្មោះ',
+    publicHol:'ថ្ងៃឈប់ជាតិ',workHol:'ធ្វើការ',allEmp:'ទាំងអស់',pay:'ប្រាក់',
+    type:'ប្រភេទ',year:'ឆ្នាំ',transport:'ដឹកជញ្ជូន',food:'អាហារ',
+    health:'សុខភាព',annual:'ប្រចាំឆ្នាំ',total:'សរុប',
+    baseSalary2:'ប្រាក់ខែ',otPay:'OT',allowance2:'ឧបត្ថម្ភ',deduction:'កាត់',
+    netSalary:'សុទ្ធ',action:'ជ្រើស',
+    present2:'ថ្ងៃមក',absent2:'ថ្ងៃអវត្តមាន',late2:'ចូលយឺត',ot2:'ថែមម៉ោង',
+    totalOTH:'ម៉ោងសរុប',totalOTPay:'ប្រាក់ OT',times:'ចំនួនដង',
+    salary2:'ប្រាក់ខែ',inTime:'ម៉ោងចូល',outTime:'ម៉ោងចេញ',note:'ចំណាំ',
+    selectEmpFirst:'ជ្រើសរើសបុគ្គលិកដើម្បីមើលស្លីប',
+    male:'ប្រុស',female:'ស្រី',active:'Active',inactive:'Inactive',select:'-- ជ្រើស --',
+    add:'បន្ថែម',
+    sbn:'ប្រព័ន្ធគ្រប់គ្រងបុគ្គលិក',sbs:'គ្រប់គ្រងបុគ្គលិក',
+    emp:'បុគ្គលិក',attend:'វត្តមាន',payroll:'ប្រាក់ខែ',
+    adminRole:'អ្នកគ្រប់គ្រង',loginTitle:'ប្រព័ន្ធគ្រប់គ្រងបុគ្គលិក',
+    loginUser:'ឈ្មោះអ្នកប្រើប្រាស់',loginPass:'ពាក្យសម្ងាត់',loginBtn:'ចូលប្រើប្រាស់',
+  },
+  en: {
+    dashboard:'Dashboard',empList:'Employee List',addEmp:'Add Employee',empCard:'Employee Card',
+    attendMark:'Mark Attendance',attendReport:'Attendance Report',overtime:'Overtime',
+    holiday:'Holiday',allowance:'Allowance',salary:'Salary',
+    salaryReport:'Salary Report',otReport:'OT Report',
+    empName:'Employee Name',dept:'Department',status:'Status',
+    save:'Save',cancel:'Cancel',delete:'Delete',edit:'Edit',view:'View',
+    totalEmp:'Total Employees',presentToday:'Present Today',absentToday:'Absent Today',
+    totalSalary:'Total Salary',
+    saved:'Saved successfully!',deleted:'Deleted successfully!',
+    present:'Present',absent:'Absent',late:'Late',halfday:'Half Day',leave:'Leave',
+    generate:'Generate',calc:'Calculate',print:'Print',
+    thisMonth:'this month',recentAttend:'Today\'s Attendance',mark:'Mark',
+    monthlyAttend:'Monthly Attendance',salaryDist:'Salary Distribution',
+    addEmpFull:'Add / Edit Employee Information',
+    photo:'Photo (4x6)',clickUpload:'Click to upload photo',
+    personalInfo:'Personal Information',jobInfo:'Job Information',
+    fullName:'Full Name',nameEn:'Name (English)',gender:'Gender',dob:'Date of Birth',
+    national:'Nationality',idCard:'ID Card',phone:'Phone',address:'Address',
+    empId:'Employee ID',position:'Position',startDate:'Start Date',
+    baseSalary:'Base Salary ($)',bankAcc:'Bank Account',contract:'Contract Type',
+    clear:'Clear',empDetail:'Employee Profile',
+    addOT:'Add Overtime',otHours:'OT Hours',rate:'Rate',reason:'Reason',
+    amount:'Amount',date:'Date',holName:'Holiday Name',
+    publicHol:'Public Holiday',workHol:'Work on Holiday',allEmp:'All Employees',pay:'Pay',
+    type:'Type',year:'Year',transport:'Transport',food:'Food',
+    health:'Health',annual:'Annual Bonus',total:'Total',
+    baseSalary2:'Base Salary',otPay:'OT Pay',allowance2:'Allowance',deduction:'Deduction',
+    netSalary:'Net Salary',action:'Action',
+    present2:'Present Days',absent2:'Absent Days',late2:'Late',ot2:'OT',
+    totalOTH:'Total Hours',totalOTPay:'OT Pay',times:'Times',
+    salary2:'Salary',inTime:'Time In',outTime:'Time Out',note:'Note',
+    selectEmpFirst:'Select an employee to view salary slip',
+    male:'Male',female:'Female',active:'Active',inactive:'Inactive',select:'-- Select --',
+    add:'Add',
+    sbn:'Employee Management System',sbs:'Manage Employees',
+    emp:'Employees',attend:'Attendance',payroll:'Payroll',
+    adminRole:'Administrator',loginTitle:'Employee Management System',
+    loginUser:'Username',loginPass:'Password',loginBtn:'Login',
   }
+};
 
-  const titles = {
-    dashboard: 'Dashboard',
-    courses: 'My Courses',
-    explore: 'Explore',
-    progress: 'Progress',
-    assignments: 'Assignments',
-    forum: 'Forum',
-    leaderboard: 'Leaderboard',
-    events: 'Live Events',
-    profile: 'Profile',
-    settings: 'Settings'
-  };
+let employees = [
+  {id:'EMP-001',name:'ចាន់ សុទ្ធា',nameEn:'Chan Sotha',gender:'ប្រុស',dob:'1992-05-10',national:'ខ្មែរ',idCard:'012345678',phone:'012 345 678',email:'sotha@company.com',address:'ភ្នំពេញ',position:'Software Developer',dept:'IT',start:'2020-01-15',salary:800,bank:'ABA-001234',contract:'Full-time',status:'Active',photo:''},
+  {id:'EMP-002',name:'ស្រី លក្ខណ៍',nameEn:'Srey Leak',gender:'ស្រី',dob:'1995-08-22',national:'ខ្មែរ',idCard:'098765432',phone:'015 678 901',email:'leak@company.com',address:'កណ្តាល',position:'HR Manager',dept:'HR',start:'2019-03-01',salary:700,bank:'Acleda-002345',contract:'Full-time',status:'Active',photo:''},
+  {id:'EMP-003',name:'ហ៊ុន ដារ៉ា',nameEn:'Hun Dara',gender:'ប្រុស',dob:'1990-12-03',national:'ខ្មែរ',idCard:'034567890',phone:'017 234 567',email:'dara@company.com',address:'ពោធិ៍សាត់',position:'Accountant',dept:'Finance',start:'2021-06-10',salary:650,bank:'Wing-003456',contract:'Full-time',status:'Active',photo:''},
+  {id:'EMP-004',name:'ម៉ាន់ ច័ន្ទ',nameEn:'Man Chan',gender:'ស្រី',dob:'1997-03-15',national:'ខ្មែរ',idCard:'056789012',phone:'016 890 123',email:'chan@company.com',address:'ភ្នំពេញ',position:'Marketing',dept:'Operations',start:'2022-09-01',salary:550,bank:'ABA-004567',contract:'Full-time',status:'Active',photo:''},
+  {id:'EMP-005',name:'ពេជ្រ រ័ត្ន',nameEn:'Pech Roth',gender:'ប្រុស',dob:'1988-07-20',national:'ខ្មែរ',idCard:'023456789',phone:'011 456 789',email:'roth@company.com',address:'សៀមរាប',position:'Team Leader',dept:'IT',start:'2018-02-14',salary:900,bank:'ABA-005678',contract:'Full-time',status:'Active',photo:''},
+  {id:'EMP-006',name:'ខៀវ ស្រីណា',nameEn:'Khiev Sreyna',gender:'ស្រី',dob:'1994-11-08',national:'ខ្មែរ',idCard:'045678901',phone:'077 567 890',email:'sreyna@company.com',address:'ក្រចេះ',position:'Designer',dept:'IT',start:'2023-01-05',salary:600,bank:'ABA-006789',contract:'Part-time',status:'Active',photo:''},
+  {id:'EMP-007',name:'លន់ វណ្ណ',nameEn:'Lon Vann',gender:'ប្រុស',dob:'1993-04-25',national:'ខ្មែរ',idCard:'067890123',phone:'089 678 901',email:'vann@company.com',address:'ឧត្តរមានជ័យ',position:'Finance Officer',dept:'Finance',start:'2020-11-20',salary:620,bank:'ABA-007890',contract:'Full-time',status:'Inactive',photo:''},
+  {id:'EMP-008',name:'ណារ ស្រីអ៊ី',nameEn:'Nar Srey Ei',gender:'ស្រី',dob:'1996-09-12',national:'ខ្មែរ',idCard:'078901234',phone:'096 789 012',email:'srei@company.com',address:'ភ្នំពេញ',position:'Receptionist',dept:'HR',start:'2022-04-01',salary:450,bank:'Acleda-008901',contract:'Full-time',status:'Active',photo:''},
+];
 
-  function setPage(page) {
-    document.getElementById('page-title').textContent = titles[page] || page;
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    event && event.target && event.target.closest('.nav-item') && event.target.closest('.nav-item').classList.add('active');
-    if (window.innerWidth < 860) document.getElementById('sidebar').classList.remove('open');
-  }
+let attendance = {};
+let overtimeList = [];
+let holidayList = [];
+let allowanceList = [];
 
-  function switchTab(el, label) {
-    document.querySelectorAll('#course-tabs .tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    const grid = document.getElementById('course-grid');
-    grid.style.opacity = '0';
-    grid.style.transform = 'translateY(10px)';
-    setTimeout(() => {
-      grid.style.transition = 'opacity .3s, transform .3s';
-      grid.style.opacity = '1';
-      grid.style.transform = 'translateY(0)';
-    }, 100);
-  }
+// Pre-fill some attendance
+const today = new Date().toISOString().split('T')[0];
+employees.forEach((e,i)=>{
+  attendance[today] = attendance[today]||{};
+  attendance[today][e.id] = {status:i<6?'present':i===6?'absent':'late',in:i<6?'08:00':'09:30',out:i<6?'17:00':'',note:''};
+});
 
-  // Animate progress bars on load
-  window.addEventListener('load', () => {
-    document.querySelectorAll('.prog-fill').forEach(fill => {
-      const w = fill.style.width;
-      fill.style.width = '0';
-      setTimeout(() => { fill.style.width = w; }, 400);
-    });
+// Pre-fill OT
+overtimeList = [
+  {empId:'EMP-001',date:'2025-05-01',hours:3,rate:1.5,reason:'Project deadline'},
+  {empId:'EMP-005',date:'2025-05-03',hours:4,rate:2.0,reason:'Holiday work'},
+];
+allowanceList = [
+  {empId:'EMP-001',year:2025,transport:50,food:30,health:20,annual:200},
+  {empId:'EMP-002',year:2025,transport:40,food:25,health:20,annual:150},
+];
+holidayList = [
+  {date:'2025-04-14',name:'ពិធីបុណ្យចូលឆ្នាំថ្មី',type:'ថ្ងៃឈប់ជាតិ',emp:'all',pay:0},
+  {date:'2025-05-01',name:'Khmer New Year Holiday',type:'ធ្វើការ',emp:'EMP-001',pay:60},
+];
+
+// ==================== LANGUAGE ====================
+function setLang(lang, btn) {
+  currentLang = lang;
+  document.body.className = lang==='en'?'lang-en':'lang-km';
+  // Update all .t-* elements
+  const t = T[lang];
+  Object.entries(t).forEach(([k,v])=>{
+    document.querySelectorAll('.t-'+k).forEach(el=>el.textContent=v);
   });
+  // Login page labels
+  document.getElementById('loginTitle').textContent = t.loginTitle;
+  document.getElementById('lbUser').textContent = t.loginUser;
+  document.getElementById('lbPass').textContent = t.loginPass;
+  document.getElementById('lbLoginBtn').textContent = t.loginBtn;
+  document.getElementById('sb-title').textContent = 'HR '+t.sbn.split(' ').pop();
+  document.getElementById('sb-sub').textContent = t.sbs;
+  document.getElementById('sbRole').textContent = t.adminRole;
+  // Toggle login buttons
+  if(document.getElementById('loginLangKm')){
+    document.getElementById('loginLangKm').classList.toggle('active',lang==='km');
+    document.getElementById('loginLangEn').classList.toggle('active',lang==='en');
+  }
+  document.getElementById('appLangKm').classList.toggle('active',lang==='km');
+  document.getElementById('appLangEn').classList.toggle('active',lang==='en');
+  // Re-render current page
+  const active = document.querySelector('.page.active');
+  if(active) renderPage(active.id.replace('page-',''));
+}
+
+// ==================== LOGIN ====================
+function doLogin(){
+  const u=document.getElementById('username').value;
+  const p=document.getElementById('password').value;
+  if(u==='admin'&&p==='1234'){
+    document.getElementById('loginPage').style.display='none';
+    document.getElementById('app').style.display='block';
+    document.getElementById('sbUsername').textContent=u;
+    document.getElementById('headerDate').textContent=new Date().toLocaleDateString('km-KH',{year:'numeric',month:'long',day:'numeric'});
+    document.getElementById('attendDate').value=today;
+    populateSelects();
+    renderPage('dashboard');
+    renderPage('employees');
+    renderPage('attendance');
+    genAttendReport();
+    genOTReport();
+    renderOTTable();
+    renderHolidayTable();
+    renderAllowTable();
+    buildMonthChart();
+    buildDeptList();
+  } else {
+    showToast(currentLang==='km'?'ឈ្មោះ ឬ ពាក្យសម្ងាត់មិនត្រឹមត្រូវ!':'Wrong username or password!',true);
+  }
+}
+function doLogout(){
+  document.getElementById('loginPage').style.display='flex';
+  document.getElementById('app').style.display='none';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginPage').style.display!=='none')doLogin()});
+
+// ==================== NAVIGATION ====================
+function showPage(name, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const p=document.getElementById('page-'+name);
+  if(p)p.classList.add('active');
+  if(el)el.classList.add('active');
+  const t=T[currentLang];
+  const titles={dashboard:t.dashboard,employees:t.empList,addEmp:t.addEmp,empCard:t.empCard,
+    attendance:t.attendMark,attendReport:t.attendReport,overtime:t.overtime,
+    holiday:t.holiday,allowance:t.allowance,salary:t.salary,
+    salaryReport:t.salaryReport,otReport:t.otReport};
+  const hdr=document.getElementById('headerTitle');
+  if(hdr)hdr.innerHTML=`${titles[name]||name} <span>${new Date().toLocaleDateString('km-KH',{year:'numeric',month:'long',day:'numeric'})}</span>`;
+  renderPage(name);
+}
+function renderPage(name){
+  if(name==='employees')renderEmployeeTable();
+  if(name==='attendance')renderAttendTable();
+  if(name==='empCard'){populateCardSelect();renderEmpCard();}
+  if(name==='salary')genSalary();
+  if(name==='salaryReport')populateSRSelect();
+}
+
+// ==================== EMPLOYEES ====================
+function renderEmployeeTable(){
+  const q=(document.getElementById('empSearch')||{}).value||'';
+  const df=(document.getElementById('deptFilter')||{}).value||'';
+  const t=T[currentLang];
+  let rows=employees.filter(e=>
+    (e.name.includes(q)||e.nameEn.toLowerCase().includes(q.toLowerCase())||e.id.includes(q))&&
+    (!df||e.dept===df)
+  );
+  const tbody=document.getElementById('empTableBody');
+  if(!tbody)return;
+  tbody.innerHTML=rows.map((e,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td><div class="emp-name">
+        <div class="emp-avatar">${e.photo?`<img src="${e.photo}">`:''}${!e.photo?e.nameEn[0]:''}</div>
+        <div><div style="font-weight:600">${e.name}</div><div style="font-size:.7rem;color:var(--text-muted)">${e.nameEn}</div></div>
+      </div></td>
+      <td>${e.position}</td>
+      <td><span class="badge badge-blue">${e.dept}</span></td>
+      <td>${e.phone}</td>
+      <td style="font-weight:700;color:var(--success)">$${e.salary}</td>
+      <td><span class="badge ${e.status==='Active'?'badge-green':'badge-red'}">${t[e.status.toLowerCase()]||e.status}</span></td>
+      <td style="display:flex;gap:4px">
+        <button class="btn btn-outline btn-sm btn-icon" onclick="viewEmp('${e.id}')" title="${t.view}"><i class="fas fa-eye"></i></button>
+        <button class="btn btn-primary btn-sm btn-icon" onclick="editEmp('${e.id}')" title="${t.edit}"><i class="fas fa-edit"></i></button>
+        <button class="btn btn-danger btn-sm btn-icon" onclick="deleteEmp('${e.id}')" title="${t.delete}"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>`).join('');
+  document.getElementById('totalEmpCount').textContent=employees.length;
+}
+
+function viewEmp(id){
+  const e=employees.find(x=>x.id===id); if(!e)return;
+  const t=T[currentLang];
+  document.getElementById('empDetailBody').innerHTML=`
+    <div style="display:flex;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="width:100px;height:133px;border-radius:8px;overflow:hidden;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--primary)">
+          ${e.photo?`<img src="${e.photo}" style="width:100%;height:100%;object-fit:cover">`:`<i class="fas fa-user"></i>`}
+        </div>
+        <div style="text-align:center;margin-top:8px">
+          <div style="font-size:.72rem;color:var(--text-muted)">${e.id}</div>
+          <span class="badge ${e.status==='Active'?'badge-green':'badge-red'}" style="margin-top:4px">${e.status}</span>
+        </div>
+      </div>
+      <div style="flex:1;min-width:240px">
+        <div class="section-title">${t.personalInfo}</div>
+        <div class="info-grid">
+          <div class="info-item"><div class="ii-label">${t.fullName}</div><div class="ii-val">${e.name}</div></div>
+          <div class="info-item"><div class="ii-label">${t.nameEn}</div><div class="ii-val">${e.nameEn}</div></div>
+          <div class="info-item"><div class="ii-label">${t.gender}</div><div class="ii-val">${e.gender}</div></div>
+          <div class="info-item"><div class="ii-label">${t.dob}</div><div class="ii-val">${e.dob}</div></div>
+          <div class="info-item"><div class="ii-label">${t.phone}</div><div class="ii-val">${e.phone}</div></div>
+          <div class="info-item"><div class="ii-label">Email</div><div class="ii-val">${e.email}</div></div>
+          <div class="info-item" style="grid-column:1/-1"><div class="ii-label">${t.address}</div><div class="ii-val">${e.address}</div></div>
+        </div>
+        <div class="section-title" style="margin-top:16px">${t.jobInfo}</div>
+        <div class="info-grid">
+          <div class="info-item"><div class="ii-label">${t.position}</div><div class="ii-val">${e.position}</div></div>
+          <div class="info-item"><div class="ii-label">${t.dept}</div><div class="ii-val">${e.dept}</div></div>
+          <div class="info-item"><div class="ii-label">${t.startDate}</div><div class="ii-val">${e.start}</div></div>
+          <div class="info-item"><div class="ii-label">${t.baseSalary}</div><div class="ii-val" style="color:var(--success);font-weight:700">$${e.salary}</div></div>
+          <div class="info-item"><div class="ii-label">${t.bankAcc}</div><div class="ii-val">${e.bank}</div></div>
+          <div class="info-item"><div class="ii-label">${t.contract}</div><div class="ii-val">${e.contract}</div></div>
+        </div>
+      </div>
+    </div>`;
+  openModal('empDetailModal');
+}
+function editEmp(id){
+  const e=employees.find(x=>x.id===id); if(!e)return;
+  editEmpId=id;
+  showPage('addEmp');
+  const fields={fName:e.name,fNameEn:e.nameEn,fGender:e.gender,fDob:e.dob,fNational:e.national,
+    fId:e.idCard,fPhone:e.phone,fEmail:e.email,fAddress:e.address,
+    fEmpId:e.id,fPosition:e.position,fDept:e.dept,fStart:e.start,
+    fSalary:e.salary,fBank:e.bank,fContract:e.contract,fStatus:e.status};
+  Object.entries(fields).forEach(([k,v])=>{const el=document.getElementById(k);if(el)el.value=v;});
+  if(e.photo){
+    document.getElementById('photoPreview').src=e.photo;
+    document.getElementById('photoPreview').style.display='block';
+    document.getElementById('photoIcon').style.display='none';
+    document.getElementById('photoText').style.display='none';
+  }
+}
+function deleteEmp(id){
+  if(!confirm(currentLang==='km'?'តើអ្នកប្រាកដទេ?':'Are you sure?'))return;
+  employees=employees.filter(e=>e.id!==id);
+  renderEmployeeTable();
+  showToast(T[currentLang].deleted,false);
+}
+function saveEmployee(){
+  const t=T[currentLang];
+  const photoEl=document.getElementById('photoPreview');
+  const emp={
+    id:document.getElementById('fEmpId').value||'EMP-'+(employees.length+1).toString().padStart(3,'0'),
+    name:document.getElementById('fName').value,
+    nameEn:document.getElementById('fNameEn').value,
+    gender:document.getElementById('fGender').value,
+    dob:document.getElementById('fDob').value,
+    national:document.getElementById('fNational').value,
+    idCard:document.getElementById('fId').value,
+    phone:document.getElementById('fPhone').value,
+    email:document.getElementById('fEmail').value,
+    address:document.getElementById('fAddress').value,
+    position:document.getElementById('fPosition').value,
+    dept:document.getElementById('fDept').value,
+    start:document.getElementById('fStart').value,
+    salary:parseFloat(document.getElementById('fSalary').value)||0,
+    bank:document.getElementById('fBank').value,
+    contract:document.getElementById('fContract').value,
+    status:document.getElementById('fStatus').value,
+    photo:photoEl&&photoEl.style.display!=='none'?photoEl.src:'',
+  };
+  if(!emp.name){showToast(currentLang==='km'?'សូមបញ្ចូលឈ្មោះ!':'Please enter name!',true);return;}
+  if(editEmpId){
+    const idx=employees.findIndex(e=>e.id===editEmpId);
+    if(idx>=0)employees[idx]=emp;
+    editEmpId=null;
+  }else{
+    if(employees.find(e=>e.id===emp.id)){emp.id='EMP-'+(employees.length+1).toString().padStart(3,'0');}
+    employees.push(emp);
+  }
+  showToast(t.saved);
+  populateSelects();
+  showPage('employees');
+}
+function clearEmpForm(){
+  ['fName','fNameEn','fGender','fDob','fNational','fId','fPhone','fEmail','fAddress','fEmpId','fPosition','fDept','fStart','fSalary','fBank'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('photoPreview').style.display='none';
+  document.getElementById('photoIcon').style.display='block';
+  document.getElementById('photoText').style.display='block';
+  editEmpId=null;
+}
+
+// PHOTO
+function previewPhoto(input){
+  const file=input.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=document.getElementById('photoPreview');
+    img.src=e.target.result;img.style.display='block';
+    document.getElementById('photoIcon').style.display='none';
+    document.getElementById('photoText').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ==================== ATTENDANCE ====================
+function renderAttendTable(){
+  const date=(document.getElementById('attendDate')||{}).value||today;
+  attendance[date]=attendance[date]||{};
+  const t=T[currentLang];
+  const statuses=[
+    {val:'present',label:t.present,cls:'badge-green'},
+    {val:'absent',label:t.absent,cls:'badge-red'},
+    {val:'late',label:t.late,cls:'badge-gold'},
+    {val:'halfday',label:t.halfday,cls:'badge-blue'},
+    {val:'leave',label:t.leave,cls:'badge-gray'},
+  ];
+  const tbody=document.getElementById('attendTableBody');
+  if(!tbody)return;
+  tbody.innerHTML=employees.map((e,i)=>{
+    const a=attendance[date][e.id]||{status:'absent',in:'',out:'',note:''};
+    const opts=statuses.map(s=>`<option value="${s.val}" ${a.status===s.val?'selected':''}>${s.label}</option>`).join('');
+    return `<tr>
+      <td>${i+1}</td>
+      <td><div class="emp-name"><div class="emp-avatar">${e.photo?`<img src="${e.photo}">`:''}${!e.photo?e.nameEn[0]:''}</div>${e.name}</div></td>
+      <td><span class="badge badge-blue">${e.dept}</span></td>
+      <td><select class="filter-select" id="as-${e.id}" onchange="updateAttend('${e.id}','${date}')">${opts}</select></td>
+      <td><input type="time" value="${a.in}" style="border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;font-family:inherit;font-size:.78rem;background:var(--bg)" onchange="setAttendTime('${e.id}','${date}','in',this.value)"></td>
+      <td><input type="time" value="${a.out}" style="border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;font-family:inherit;font-size:.78rem;background:var(--bg)" onchange="setAttendTime('${e.id}','${date}','out',this.value)"></td>
+      <td><input type="text" value="${a.note}" placeholder="..." style="border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;font-family:inherit;font-size:.78rem;background:var(--bg);width:100%" onchange="setAttendTime('${e.id}','${date}','note',this.value)"></td>
+    </tr>`;
+  }).join('');
+  // Update dashboard
+  renderDashTable(date);
+}
+function updateAttend(empId,date){
+  if(!attendance[date])attendance[date]={};
+  if(!attendance[date][empId])attendance[date][empId]={status:'absent',in:'',out:'',note:''};
+  attendance[date][empId].status=document.getElementById('as-'+empId).value;
+}
+function setAttendTime(empId,date,field,val){
+  if(!attendance[date])attendance[date]={};
+  if(!attendance[date][empId])attendance[date][empId]={status:'absent',in:'',out:'',note:''};
+  attendance[date][empId][field]=val;
+}
+function saveAllAttend(){
+  showToast(T[currentLang].saved);
+  const date=(document.getElementById('attendDate')||{}).value||today;
+  employees.forEach(e=>{
+    if(!attendance[date])attendance[date]={};
+    if(!attendance[date][e.id])attendance[date][e.id]={status:'absent',in:'',out:'',note:''};
+  });
+  renderDashTable(date);
+}
+function renderDashTable(date){
+  const t=T[currentLang];
+  const tbody=document.getElementById('dashTableBody');
+  if(!tbody)return;
+  const att=attendance[date]||{};
+  const badgeMap={present:'badge-green',absent:'badge-red',late:'badge-gold',halfday:'badge-blue',leave:'badge-gray'};
+  tbody.innerHTML=employees.slice(0,6).map(e=>{
+    const a=att[e.id]||{status:'absent',in:'--',out:'--'};
+    return `<tr>
+      <td><div class="emp-name"><div class="emp-avatar">${e.photo?`<img src="${e.photo}">`:''}${!e.photo?e.nameEn[0]:''}</div>${e.name}</div></td>
+      <td>${e.dept}</td>
+      <td><span class="badge ${badgeMap[a.status]||'badge-gray'}">${t[a.status]||a.status}</span></td>
+      <td>${a.in||'--'}</td>
+      <td>${a.out||'--'}</td>
+    </tr>`;
+  }).join('');
+  const p=Object.values(att).filter(a=>a.status==='present'||a.status==='late').length;
+  const ab=employees.length-p;
+  document.getElementById('presentCount').textContent=p;
+  document.getElementById('absentCount').textContent=ab;
+}
+
+// ==================== ATTEND REPORT ====================
+function genAttendReport(){
+  const month=(document.getElementById('arMonth')||{}).value||'05';
+  const year=(document.getElementById('arYear')||{}).value||'2025';
+  const tbody=document.getElementById('arBody');
+  if(!tbody)return;
+  const t=T[currentLang];
+  tbody.innerHTML=employees.map(e=>{
+    let present=0,absent=0,late=0,ot=0;
+    Object.entries(attendance).forEach(([d,day])=>{
+      if(d.startsWith(`${year}-${month}`)&&day[e.id]){
+        const s=day[e.id].status;
+        if(s==='present')present++;
+        else if(s==='absent')absent++;
+        else if(s==='late'){late++;present++;}
+      }
+    });
+    ot=overtimeList.filter(o=>o.empId===e.id&&o.date.startsWith(`${year}-${month}`)).reduce((s,o)=>s+o.hours,0);
+    const workDays=22;
+    const pct=Math.round(present/workDays*100);
+    return `<tr>
+      <td><div class="emp-name"><div class="emp-avatar">${e.nameEn[0]}</div>${e.name}</div></td>
+      <td>${e.dept}</td>
+      <td style="color:var(--success);font-weight:700">${present}</td>
+      <td style="color:var(--danger);font-weight:700">${absent}</td>
+      <td style="color:var(--warning)">${late}</td>
+      <td style="color:var(--info)">${ot}h</td>
+      <td><div style="min-width:80px">
+        <div style="display:flex;justify-content:space-between;font-size:.72rem;font-weight:700"><span>${pct}%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ==================== OVERTIME ====================
+function renderOTTable(){
+  const tbody=document.getElementById('otBody');
+  if(!tbody)return;
+  const t=T[currentLang];
+  tbody.innerHTML=overtimeList.map((o,i)=>{
+    const e=employees.find(x=>x.id===o.empId);
+    const amt=((e?e.salary:0)/26/8*o.hours*o.rate).toFixed(2);
+    return `<tr>
+      <td>${e?e.name:'--'}</td>
+      <td>${o.date}</td>
+      <td style="font-weight:700">${o.hours}h</td>
+      <td>x${o.rate}</td>
+      <td style="color:var(--success);font-weight:700">$${amt}</td>
+      <td>${o.reason}</td>
+      <td><button class="btn btn-danger btn-sm btn-icon" onclick="deleteOT(${i})"><i class="fas fa-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+}
+function openOTModal(){
+  populateEmpSelect('otEmp');
+  document.getElementById('otDate').value=today;
+  openModal('otModal');
+}
+function saveOT(){
+  const empId=(document.getElementById('otEmp')||{}).value;
+  const date=(document.getElementById('otDate')||{}).value;
+  const hours=parseFloat((document.getElementById('otHours')||{}).value)||0;
+  const rate=parseFloat((document.getElementById('otRate')||{}).value)||1.5;
+  const reason=(document.getElementById('otReason')||{}).value;
+  if(!empId||!hours){showToast(currentLang==='km'?'សូមបំពេញទិន្នន័យ!':'Please fill in all fields!',true);return;}
+  overtimeList.push({empId,date,hours,rate,reason});
+  closeModal('otModal');
+  renderOTTable();
+  showToast(T[currentLang].saved);
+}
+function deleteOT(i){overtimeList.splice(i,1);renderOTTable();}
+
+// ==================== HOLIDAY ====================
+function renderHolidayTable(){
+  const tbody=document.getElementById('holidayBody');
+  if(!tbody)return;
+  const t=T[currentLang];
+  tbody.innerHTML=holidayList.map((h,i)=>{
+    const e=h.emp==='all'?t.allEmp:(employees.find(x=>x.id===h.emp)||{}).name||h.emp;
+    return `<tr>
+      <td>${h.date}</td>
+      <td style="font-weight:600">${h.name}</td>
+      <td><span class="badge ${h.type==='ធ្វើការ'?'badge-gold':'badge-blue'}">${h.type}</span></td>
+      <td>${e}</td>
+      <td style="color:var(--success)">$${h.pay}</td>
+      <td><button class="btn btn-danger btn-sm btn-icon" onclick="deleteHoliday(${i})"><i class="fas fa-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+}
+function openHolidayModal(){
+  populateEmpSelect('holEmp');
+  document.getElementById('holDate').value=today;
+  openModal('holidayModal');
+}
+function saveHoliday(){
+  holidayList.push({
+    date:document.getElementById('holDate').value,
+    name:document.getElementById('holName').value,
+    type:document.getElementById('holType').value,
+    emp:document.getElementById('holEmp').value,
+    pay:parseFloat(document.getElementById('holPay').value)||0,
+  });
+  closeModal('holidayModal');
+  renderHolidayTable();
+  showToast(T[currentLang].saved);
+}
+function deleteHoliday(i){holidayList.splice(i,1);renderHolidayTable();}
+
+// ==================== ALLOWANCE ====================
+function renderAllowTable(){
+  const tbody=document.getElementById('allowBody');
+  if(!tbody)return;
+  tbody.innerHTML=allowanceList.map((a,i)=>{
+    const e=employees.find(x=>x.id===a.empId);
+    const total=a.transport+a.food+a.health+a.annual;
+    return `<tr>
+      <td>${e?e.name:'--'}</td>
+      <td>${a.year}</td>
+      <td>$${a.transport}</td>
+      <td>$${a.food}</td>
+      <td>$${a.health}</td>
+      <td>$${a.annual}</td>
+      <td style="font-weight:700;color:var(--success)">$${total}</td>
+      <td><button class="btn btn-danger btn-sm btn-icon" onclick="deleteAllow(${i})"><i class="fas fa-trash"></i></button></td>
+    </tr>`;
+  }).join('');
+}
+function openAllowModal(){
+  populateEmpSelect('allowEmp');
+  openModal('allowModal');
+}
+function saveAllow(){
+  allowanceList.push({
+    empId:document.getElementById('allowEmp').value,
+    year:parseInt(document.getElementById('allowYear').value)||2025,
+    transport:parseFloat(document.getElementById('allowTransport').value)||0,
+    food:parseFloat(document.getElementById('allowFood').value)||0,
+    health:parseFloat(document.getElementById('allowHealth').value)||0,
+    annual:parseFloat(document.getElementById('allowAnnual').value)||0,
+  });
+  closeModal('allowModal');
+  renderAllowTable();
+  showToast(T[currentLang].saved);
+}
+function deleteAllow(i){allowanceList.splice(i,1);renderAllowTable();}
+
+// ==================== SALARY ====================
+function genSalary(){
+  const month=(document.getElementById('salMonth')||{}).value||'05';
+  const year=(document.getElementById('salYear')||{}).value||'2025';
+  const tbody=document.getElementById('salBody');
+  if(!tbody)return;
+  const t=T[currentLang];
+  tbody.innerHTML=employees.map(e=>{
+    const otPay=overtimeList.filter(o=>o.empId===e.id&&o.date.startsWith(`${year}-${month}`))
+      .reduce((s,o)=>s+(e.salary/26/8*o.hours*o.rate),0);
+    const allow=allowanceList.find(a=>a.empId===e.id&&a.year===parseInt(year));
+    const allowTotal=allow?(allow.transport+allow.food+allow.health)/12:0;
+    const absences=Object.entries(attendance).filter(([d,day])=>d.startsWith(`${year}-${month}`)&&day[e.id]&&day[e.id].status==='absent').length;
+    const deduction=absences*(e.salary/22);
+    const net=e.salary+otPay+allowTotal-deduction;
+    return `<tr>
+      <td>${e.name}</td>
+      <td>${e.dept}</td>
+      <td>$${e.salary}</td>
+      <td style="color:var(--info)">$${otPay.toFixed(2)}</td>
+      <td style="color:var(--success)">$${allowTotal.toFixed(2)}</td>
+      <td style="color:var(--danger)">-$${deduction.toFixed(2)}</td>
+      <td style="font-weight:800;color:var(--success)">$${net.toFixed(2)}</td>
+      <td>
+        <button class="btn btn-primary btn-sm" onclick="viewSlip('${e.id}','${month}','${year}')"><i class="fas fa-file-alt"></i></button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+function populateSRSelect(){
+  const sel=document.getElementById('srEmp');if(!sel)return;
+  sel.innerHTML='<option value="">-- ជ្រើស --</option>'+employees.map(e=>`<option value="${e.id}">${e.name}</option>`).join('');
+}
+function showSlip(){
+  const id=(document.getElementById('srEmp')||{}).value;
+  if(id)viewSlip(id,'05','2025');
+}
+function viewSlip(empId,month,year){
+  const e=employees.find(x=>x.id===empId);if(!e)return;
+  const t=T[currentLang];
+  const otPay=overtimeList.filter(o=>o.empId===e.id&&o.date.startsWith(`${year}-${month}`))
+    .reduce((s,o)=>s+(e.salary/26/8*o.hours*o.rate),0);
+  const allow=allowanceList.find(a=>a.empId===e.id&&a.year===parseInt(year));
+  const allowTotal=allow?(allow.transport+allow.food+allow.health)/12:0;
+  const absences=Object.entries(attendance).filter(([d,day])=>d.startsWith(`${year}-${month}`)&&day[e.id]&&day[e.id].status==='absent').length;
+  const deduction=absences*(e.salary/22);
+  const net=e.salary+otPay+allowTotal-deduction;
+  const area=document.getElementById('slipArea');
+  if(!area)return;
+  area.innerHTML=`
+    <div class="slip">
+      <div class="slip-header">
+        <div><div style="font-size:.72rem;opacity:.6">ABC COMPANY</div><div style="font-size:1.1rem;font-weight:800">Salary Slip</div></div>
+        <div style="text-align:right"><div style="font-size:.75rem;opacity:.7">${year}/${month}</div><div style="font-weight:700">${e.id}</div></div>
+      </div>
+      <div class="slip-section">
+        <div style="display:flex;gap:16px;align-items:center">
+          <div style="width:50px;height:66px;border-radius:6px;background:rgba(255,255,255,.15);overflow:hidden;border:2px solid var(--border)">
+            ${e.photo?`<img src="${e.photo}" style="width:100%;height:100%;object-fit:cover">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--primary)"><i class="fas fa-user"></i></div>'}
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:1rem">${e.name}</div>
+            <div style="color:var(--text-muted);font-size:.8rem">${e.nameEn}</div>
+            <div style="margin-top:4px"><span class="badge badge-blue">${e.dept}</span> <span class="badge badge-gray">${e.position}</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="slip-section">
+        <div style="font-weight:700;color:var(--primary);margin-bottom:8px;font-size:.78rem">EARNINGS</div>
+        <div class="slip-row"><span>${t.baseSalary2}</span><span style="color:var(--success);font-weight:700">$${e.salary.toFixed(2)}</span></div>
+        <div class="slip-row"><span>${t.otPay}</span><span style="color:var(--info)">$${otPay.toFixed(2)}</span></div>
+        <div class="slip-row"><span>${t.allowance2} (Transport+Food+Health)/12</span><span style="color:var(--success)">$${allowTotal.toFixed(2)}</span></div>
+      </div>
+      <div class="slip-section">
+        <div style="font-weight:700;color:var(--danger);margin-bottom:8px;font-size:.78rem">DEDUCTIONS</div>
+        <div class="slip-row"><span>${t.absent2} (${absences} days x $${(e.salary/22).toFixed(2)})</span><span style="color:var(--danger)">-$${deduction.toFixed(2)}</span></div>
+      </div>
+      <div class="slip-total">
+        <div class="total-label">${t.netSalary}</div>
+        <div class="total-val">$${net.toFixed(2)}</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-danger no-print" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+      <button class="btn btn-primary no-print" onclick="window.print()"><i class="fas fa-print"></i> ${t.print}</button>
+      <button class="btn btn-success no-print" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+    </div>`;
+  showPage('salaryReport');
+}
+
+// ==================== OT REPORT ====================
+function genOTReport(){
+  const month=(document.getElementById('otrMonth')||{}).value||'05';
+  const year=(document.getElementById('otrYear')||{}).value||'2025';
+  const tbody=document.getElementById('otrBody');
+  if(!tbody)return;
+  tbody.innerHTML=employees.map(e=>{
+    const ots=overtimeList.filter(o=>o.empId===e.id&&o.date.startsWith(`${year}-${month}`));
+    const totalH=ots.reduce((s,o)=>s+o.hours,0);
+    const totalPay=ots.reduce((s,o)=>s+(e.salary/26/8*o.hours*o.rate),0);
+    return `<tr>
+      <td>${e.name}</td>
+      <td>${e.dept}</td>
+      <td style="font-weight:700">${totalH}h</td>
+      <td style="color:var(--success);font-weight:700">$${totalPay.toFixed(2)}</td>
+      <td>${ots.length}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ==================== EMPLOYEE CARD ====================
+function populateCardSelect(){
+  const sel=document.getElementById('cardEmpSelect');if(!sel)return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">-- ជ្រើស --</option>'+employees.map(e=>`<option value="${e.id}">${e.name}</option>`).join('');
+  if(cur)sel.value=cur;
+}
+function renderEmpCard(){
+  const id=(document.getElementById('cardEmpSelect')||{}).value;
+  const e=employees.find(x=>x.id===id);
+  if(!e){
+    document.getElementById('cardName').textContent='-- ជ្រើសបុគ្គលិក --';
+    document.getElementById('cardPos').textContent='--';
+    document.getElementById('cardId').textContent='--';
+    document.getElementById('cardDept').textContent='--';
+    document.getElementById('cardPhone').textContent='--';
+    document.getElementById('cardStart').textContent='--';
+    document.getElementById('cardPhoto').src='';
+    return;
+  }
+  document.getElementById('cardName').textContent=e.name;
+  document.getElementById('cardPos').textContent=e.position;
+  document.getElementById('cardId').textContent=e.id;
+  document.getElementById('cardDept').textContent=e.dept;
+  document.getElementById('cardPhone').textContent=e.phone;
+  document.getElementById('cardStart').textContent=e.start;
+  document.getElementById('cardPhoto').src=e.photo;
+}
+function printCard(){window.print();}
+function exportCardPDF(){showToast(currentLang==='km'?'រក្សាទុក PDF ដោយជោគជ័យ!':'Saved as PDF!');}
+
+// ==================== CHARTS ====================
+function buildMonthChart(){
+  const box=document.getElementById('monthChart');if(!box)return;
+  const labels=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const vals=[18,20,19,22,21,20,22,21,20,22,19,21];
+  box.innerHTML=vals.map((v,i)=>`
+    <div class="chart-bar" style="height:${v/22*100}%" title="${labels[i]}: ${v}days">
+      <span>${v}</span>
+    </div>`).join('')+`<div style="position:absolute;left:0;bottom:0;right:0;display:flex;justify-content:space-around;font-size:.55rem;color:var(--text-muted);padding:0 4px">${labels.map(l=>`<span>${l}</span>`).join('')}</div>`;
+}
+function buildDeptList(){
+  const el=document.getElementById('deptList');if(!el)return;
+  const depts={IT:0,HR:0,Finance:0,Operations:0};
+  employees.forEach(e=>{if(depts[e.dept]!==undefined)depts[e.dept]+=e.salary;});
+  const total=Object.values(depts).reduce((a,b)=>a+b,0);
+  const colors={IT:'var(--primary)',HR:'var(--success)',Finance:'var(--accent)',Operations:'var(--info)'};
+  el.innerHTML=Object.entries(depts).map(([d,v])=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:.78rem;font-weight:600">${d}</span>
+        <span style="font-size:.78rem;font-weight:700;color:var(--success)">$${v}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(v/total*100)}%;background:${colors[d]}"></div></div>
+    </div>`).join('');
+}
+
+// ==================== HELPERS ====================
+function populateSelects(){
+  populateEmpSelect('otEmp');
+  populateEmpSelect('holEmp');
+  populateEmpSelect('allowEmp');
+  populateCardSelect();
+  populateSRSelect();
+}
+function populateEmpSelect(id){
+  const sel=document.getElementById(id);if(!sel)return;
+  const isHol=id==='holEmp';
+  sel.innerHTML=(isHol?`<option value="all">${T[currentLang].allEmp}</option>`:'')+
+    employees.map(e=>`<option value="${e.id}">${e.name}</option>`).join('');
+}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function showToast(msg,error=false){
+  const t=document.getElementById('toast');
+  const ic=t.querySelector('i');
+  t.style.borderLeftColor=error?'var(--danger)':'var(--success)';
+  ic.style.color=error?'var(--danger)':'var(--success)';
+  ic.className=error?'fas fa-exclamation-circle':'fas fa-check-circle';
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+function exportPDF(){
+  showToast(currentLang==='km'?'កំពុងបង្កើត PDF...':'Generating PDF...');
+  setTimeout(()=>window.print(),500);
+}
+function exportExcel(){
+  // Simple CSV export
+  const rows=document.querySelectorAll('#page-'+document.querySelector('.page.active').id.replace('page-','')+' table tbody tr');
+  if(!rows.length){showToast('No data to export',true);return;}
+  let csv='';
+  document.querySelectorAll('.page.active table thead tr th').forEach(th=>csv+=`"${th.textContent}",`);
+  csv=csv.slice(0,-1)+'\n';
+  rows.forEach(row=>{
+    row.querySelectorAll('td').forEach(td=>csv+=`"${td.textContent.trim().replace(/"/g,'""')}",`);
+    csv=csv.slice(0,-1)+'\n';
+  });
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='report.csv';a.click();
+  showToast(currentLang==='km'?'Export Excel ដោយជោគជ័យ!':'Exported to Excel!');
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
+
+// Init
+window.addEventListener('load',()=>{
+  document.getElementById('attendDate').value=today;
+  setLang('km');
+});
 </script>
 </body>
 </html>
